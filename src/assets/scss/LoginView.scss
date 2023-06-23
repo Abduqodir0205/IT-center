@@ -1,0 +1,79 @@
+.login {
+    height: 100vh;
+    background: linear-gradient(90deg, #EBEFFF 0 70%, #5D5FEF 70% 100%);
+    overflow: hidden;
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .login__left-item {
+            width: 367px;
+            height: 34px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+
+            h2 {
+                color: #1A1A1A;
+                font-size: 16px;
+                font-family: Inter;
+                font-weight: 700;
+            }
+
+            p {
+                color: #000;
+                font-size: 16px;
+                font-family: Inter;
+
+                span {
+
+                    font-weight: 700;
+                }
+            }
+
+            .login__form {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                span {
+                    color: #000;
+                    font-size: 16px;
+                    font-family: Inter;
+                }
+
+                input {
+                    padding: 0 10px;
+                    width: 367px;
+                    height: 34px;
+                    border-radius: 50px;
+                    border: 1px solid #5D5FEF;
+                    background: rgba(175, 179, 255, 0.00);
+                    outline: none;
+                }
+
+                button {
+                    margin-top: 32px;
+                    height: 34px;
+                    border-radius: 50px;
+                    background: #5D5FEF;
+                    border: none;
+                    color: white;
+                }
+            }
+
+        }
+    }
+
+    .login__rot {
+        width: 553.742px;
+        height: 131.209px;
+        transform: translate(-350px) rotate(-41.105deg);
+        flex-shrink: 0;
+        border-radius: 105.53px;
+        background: #5D5FEF;
+    }
+}
