@@ -1,11 +1,26 @@
 <template>
-  <header></header>
-
-  <RouterView />
+  <Navbar/>
+  <div>
+    <ScienceDirection/>
+  </div>
 </template>
 
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
+<script>
+import Navbar from './components/navbar.vue'
+// import { RouterLink, RouterView } from 'vue-router'
+import ScienceDirection from './views/ScienceDirection.vue'
+
+export default{
+  data() {
+    return {
+      
+    }
+  },
+  components:{
+    Navbar,
+    ScienceDirection
+  }
+}
 </script>
 
 <style scoped></style>
