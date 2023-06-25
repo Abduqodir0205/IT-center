@@ -1,0 +1,136 @@
+.science {
+    overflow: hidden;
+    background: #F5F5FA;
+    position: relative;
+
+    .science__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 25px;
+
+        .science-direction {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            button {
+                display: flex;
+                width: 158.991px;
+                padding: 10px 18px 10px 12px;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                border-radius: 9px;
+                background: #5D5FEF;
+                border: none;
+                color: white;
+
+                span {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        .science__departments {
+            ul {
+                display: flex;
+                align-items: center;
+                list-style-type: none;
+                gap: 40px;
+            }
+
+        }
+
+        .science__cards {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            gap: 13px;
+            flex-wrap: wrap;
+
+            .science__card {
+                padding: 18px;
+                width: 290px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 26px;
+                border-radius: 12px;
+                background: #FFF;
+                box-shadow: 1.9999990463256836px 3.999998092651367px 3.999998092651367px 0px rgba(180, 191, 205, 0.20);
+
+                .science-card__top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    .modal {
+        width: 700px;
+        height: 400px;
+        border-radius: 10px;
+        background-color: white;
+        position: fixed;
+        top: 20%;
+        left: 26%;
+        transform: scale(0);
+        transition: .2s;
+
+        form {
+            div {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+
+                input,
+                select {
+                    padding: 5px 10px;
+                }
+            }
+
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+
+            #File-Body>#File-For {
+                display: none;
+               
+            }
+
+            #Filebutton {
+                width: 300px;
+                height: 200px;
+                border: 1px solid;
+                border-radius: 2px;
+                text-align: center;
+                background: #F5F5FA;
+                font-size: 40px;
+                font-weight: 900;
+            }
+
+            #File-Body {
+                width: 300px;
+                height: 30px;
+               
+            }
+            .btn{
+                padding: 5px 0;
+            }
+            
+        }
+    }
+
+    .modal__show {
+        transform: scale(1);
+        overflow: hidden;
+    }
+
+
+}
