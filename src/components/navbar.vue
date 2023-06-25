@@ -11,7 +11,18 @@
                     </form>
                 </div>
                 <div class="nav__right">
-                    
+                    <div class="nav__right-item">
+                        <img src="../assets/images/svg/notification.svg" alt="">
+                    </div>
+                    <div class="nav__right-item">
+                        <img src="../assets/images/svg/Info.svg" alt="">   
+                    </div>
+                    <div class="nav__right-border"></div>
+                    <div class="nav__right-user">
+                        <img src="../assets/images/png/Ellipse 1.png" alt="user photo">
+                        <p>Erik Brown</p>
+                        <img src="../assets/images/svg/Vector.svg" alt="">
+                    </div>
                 </div>
             </div>
         </div>
