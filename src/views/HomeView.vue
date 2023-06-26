@@ -1,9 +1,24 @@
-<template lang="">
+<template>
   <div>
-    <h1>home</h1>
+    <Navbar/>
+    <div>
+      <ScienceDirection/>
+    </div>
   </div>
 </template>
 <script>
-export default {}
+import Navbar from '../components/navbar.vue'
+import ScienceDirection from './ScienceDirection.vue'
+export default {
+data() {
+  return {
+    
+  }
+},
+components:{
+  Navbar,
+  ScienceDirection,
+}
+}
 </script>
-<style lang=""></style>
+<style></style>
