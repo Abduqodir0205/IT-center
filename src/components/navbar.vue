@@ -4,21 +4,20 @@
             <div class="nav__content">
                 <div class="nav__left">
                     <form action="">
-                       <div class="nav__left-form">
+                        <div class="nav__left-form">
                             <img src="../assets/images/svg/Search.svg" alt="">
                             <input type="text" placeholder="Search">
-                       </div>
+                        </div>
                     </form>
                 </div>
                 <div class="nav__right">
-<<<<<<< HEAD
-                 
-=======
+
+
                     <div class="nav__right-item">
                         <img src="../assets/images/svg/notification.svg" alt="">
                     </div>
                     <div class="nav__right-item">
-                        <img src="../assets/images/svg/Info.svg" alt="">   
+                        <img src="../assets/images/svg/Info.svg" alt="">
                     </div>
                     <div class="nav__right-border"></div>
                     <div class="nav__right-user">
@@ -26,7 +25,6 @@
                         <p>Erik Brown</p>
                         <img src="../assets/images/svg/Vector.svg" alt="">
                     </div>
->>>>>>> 16349952d6a4ffca8bb91fd8b981f95d8c0074f0
                 </div>
             </div>
         </div>
@@ -34,9 +32,7 @@
 </template>
 <script>
 export default {
-    
+
 }
 </script>
-<style>
-    
-</style>
+<style></style>
