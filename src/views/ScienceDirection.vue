@@ -35,10 +35,8 @@
             <form @submit.prevent="science">
                 <div>
                     <input type="text" placeholder="Yo'nalish">
-                    <select>
-                        <option value="frontend">Frontend</option>
-                        <option value="flutter">Flutter</option>
-                        <option value="backend">Backend</option>
+                    <select >
+                        <Options v-bind:massiv="massiv"/>
                     </select>
                     <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
                 </div>
@@ -48,7 +46,7 @@
                         <div id="Filebutton">+</div>
                     </label>
                     <input id="File-For" type="file">
-                   
+
                     <button class="btn">Jo'natish</button>
                 </div>
             </form>
@@ -56,25 +54,39 @@
     </div>
 </template>
 <script>
-let ScienceDerection = new FormData()
+// let ScienceDerection = new FormData()
+import axios from 'axios'
+import Options from '../components/options.vue'
 export default {
     data() {
         return {
             scienceName: "",
             directionName: "",
             message: "",
+            massiv: null,
+
             
         }
     },
     methods: {
         add() {
-            document.querySelector('.modal').classList.toggle('modal__show')
-            document.querySelector('.bg__modal').classList.toggle('bg__modal-show')
+            document.querySelector('.modal').classList.add('modal__show')
+            axios.get('http://192.168.1.3:8080/api/subjects/all', { headers: { 'Authorization': "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0dXJzdW5hbGkiLCJpYXQiOjE2ODgxMTg0MzAsImV4cCI6MTY4ODEyMTAyMn0.CdIL0Q1S3sP204Dl7SWZyTLGoAfMcZ4jOqnq996ikz7ROOOWUFbgcIV_2vumIZWAW9g6Rdjk5n9JyMkWPqWb1Q" } })
+                .then((response) => {
+                    let derectionData = response.data
+                    this.massiv = derectionData
+                    
+                })
+                .catch(error => console.log(error))
+
         },
-        science(){
+        science() {
             ScienceDerection.append()
         }
-    }
+    },
+    components:{
+        Options,
+    },
 }
 </script>
 <style></style>

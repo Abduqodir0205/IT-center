@@ -25,7 +25,6 @@
 <script>
 import axios from 'axios'
 var form = new FormData()
-import Home from './HomeView.vue'
 
 export default {
     name: 'CreatPost',
@@ -42,8 +41,9 @@ export default {
             axios.post('http://192.168.1.3:8080/api/auth/login', form)
             .then((response)=>{
                 let status = response.status
+                localStorage.setItem('token', response.data.token)
                 if (status == 200) {
-                    window.location.href = this.$route.query.link
+                    this.$router.push('/home')
                 }
             })
             .catch(error => console.log(error))
