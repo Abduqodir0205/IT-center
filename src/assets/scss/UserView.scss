@@ -1,0 +1,97 @@
+.main-inp__parent {
+    width: 1057px;
+    border-radius: 12px;
+    border: 1px solid #EAECF0;
+    background: var(--white, #FFF);
+    box-shadow: 0px 0.9999999403953552px 3px 0px rgba(0, 81, 175, 0.10);
+    padding: 90px 90px;
+
+    h1 {
+        color: #1E293B;
+        font-size: 32px;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 40px;
+    }
+
+
+    h2 {
+        color: #000;
+        text-align: left;
+        font-size: 18px;
+        margin-left: -23px;
+        font-weight: 600;
+        line-height: 28px;
+    }
+
+    .main-input__child {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 60px;
+      
+        input {
+            width: 140%;
+            border-radius: 8px;
+            border: 1px solid var(--gray-300, #D0D5DD);
+            background: var(--white, #FFF);
+            box-shadow: 0px 0.9999999403953552px 1.9999998807907104px 0px rgba(16, 24, 40, 0.05);
+            padding: 10px 14px;
+            outline: none;
+            background: #F5F5FA;
+            margin-bottom: 30px;
+        }
+        .inp-left__user{
+           p{
+            margin-bottom: 6px;
+           }
+        }
+        .inp-right__user {
+            
+            p {
+                color: #344054;
+                font-size: 14px;
+                padding-bottom: 6px;
+                font-family: Inter;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 20px;
+              
+            }
+        }
+    }
+}
+.main-user__button {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+
+    p {
+        color: #344054;
+        font-size: 14px;
+        font-family: Inter;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+       padding-bottom: 6px;
+
+      
+
+    }
+
+    input {
+        width: 103%;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background: #F5F5FA;
+        padding: 10px 14px;
+
+    
+
+
+    }
+}

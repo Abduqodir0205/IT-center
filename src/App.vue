@@ -3,7 +3,8 @@
     <SiteBar/>
     <div>
       <Navbar/>
-    <ScienceDirection/>
+    <!-- <ScienceDirection/> -->
+    <UserView/>
     </div>
   </div>
 </template>
@@ -11,6 +12,7 @@
 <script>
 import Navbar from './components/navbar.vue'
 import SiteBar from './components/sitebar.vue'
+import UserView from './views/UserView.vue'
 // import { RouterLink, RouterView } from 'vue-router'
 import ScienceDirection from './views/ScienceDirection.vue'
 
@@ -23,7 +25,8 @@ export default{
   components:{
     Navbar,
     ScienceDirection,
-    SiteBar
+    SiteBar,
+    UserView
   }
 }
 </script>
