@@ -18,7 +18,6 @@
                 <p>Order Date</p>
                 <div class="border-calendar__user">
                   <input type="text" name="Order Date" placeholder="Order Date">
-                  <img src="../assets/images/png/calendar.jpg" alt="">
                 </div>
               </form>
             </div>
@@ -28,7 +27,6 @@
                 <input type="text" name="Last Name" placeholder="Last Name">
                 <p>Delivery Date</p>
                 <input type="text" name="MM / DD / YYYY" placeholder="MM / DD / YYYY">
-                  <img src="../assets/images/png/calendar.jpg" alt="">
 
               </form>
 

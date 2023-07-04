@@ -9,6 +9,7 @@
 <script>
 import Navbar from '../components/navbar.vue'
 import ScienceDirection from './ScienceDirection.vue'
+
 export default {
 data() {
   return {
