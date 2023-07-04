@@ -5,10 +5,8 @@ import App from './App.vue'
 import router from './router'
 import './assets/scss/main.scss'
 
-import VueCookies from 'vue3-cookies'
 const app = createApp(App)
 
-app.use(VueCookies);
 app.use(createPinia())
 app.use(router)
 
