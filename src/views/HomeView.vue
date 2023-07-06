@@ -5,24 +5,27 @@
       <Navbar />
       <ScienceDirection />
     </div>
+   
   </div>
 </template>
 <script>
 import Navbar from '../components/navbar.vue'
 import ScienceDirection from './ScienceDirection.vue'
 import SiteBar from '../components/sitebar.vue'
+import axios from 'axios'
 export default {
   data() {
     return {
-
     }
   },
   components: {
     Navbar,
     ScienceDirection,
     SiteBar,
+  },
+  methods: {
+  },
   }
-}
 </script>
 <style>
 .view {
@@ -33,13 +36,16 @@ export default {
     'a c c c'
     'a c c c';
 }
-SiteBar{
+
+SiteBar {
   grid-area: a;
 }
-Navbar{
+
+Navbar {
   grid-area: b;
 }
-ScienceDirection{
+
+ScienceDirection {
   grid-area: c;
 }
 </style>

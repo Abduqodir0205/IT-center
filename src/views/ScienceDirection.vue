@@ -32,24 +32,47 @@
             </div>
         </div>
         <div class="modal drop-shadow-2xl">
-            <form @submit.prevent="science">
-                <div>
-                    <input type="text" placeholder="Yo'nalish">
-                    <select >
-                        <Options v-bind:massiv="massiv"/>
-                    </select>
-                    <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
-                </div>
-                <div id="File-Body">
-                    <label id="File-Lable" for="File-For">
-                        Rasm qo'shish:
-                        <div id="Filebutton">+</div>
-                    </label>
-                    <input id="File-For" type="file">
-
-                    <button class="btn">Jo'natish</button>
-                </div>
-            </form>
+            <div class="modal__content">
+                <form @submit.prevent="submit">
+                    <div class="save__btn">
+                        <button  id="save">Saqlash</button>
+                        <div id="saveX" @click="removeSave">Bekor qilish</div>
+                    </div>
+                    <div class="selects">
+                        <div>
+                            <label class="label" for="">Fan</label>
+                            <select id="modal__inputs" @change="getFanData">
+                                <option  v-for="(element, i) in fan" :key="i" :value="element.id">{{ element.name }}</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label" for="">Yo'nalish</label>
+                            <select id="modal__inputs" @change="getSubData">
+                                <option v-for="(item, i) in yonalish" :key="i"  :value="item.id" >{{ item.name }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="datas">
+                        <div>
+                            <label class="label" for="">Ochilgan sana</label>
+                            <input disabled="false" id="modal__inputs" type="text" v-model="date">
+                        </div>
+                        <div>
+                            <label class="label" for="">Yopilish sana</label>
+                            <input id="modal__inputs" type="date" placeholder="12.12.2023">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="label" for="">Qisqacha ma’lumot</label>
+                        <div class="texterya">
+                            <textarea cols="30" rows="5" v-model="textareaValue"></textarea>
+                        </div>
+                    </div>
+                    <div class="upload">
+                        <input type="file" @change="changeFile">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </template>
@@ -57,6 +80,8 @@
 // let ScienceDerection = new FormData()
 import axios from 'axios'
 import Options from '../components/options.vue'
+
+
 export default {
     data() {
         return {
@@ -64,29 +89,85 @@ export default {
             directionName: "",
             message: "",
             massiv: null,
+            fan: null,
+            yonalish: null,
+            date: null,
+            selected1: null,
+            selected2: null,
+            textareaValue: '',
+            file: null,
 
-            
         }
     },
     methods: {
         add() {
-            document.querySelector('.modal').classList.add('modal__show')
-            axios.get('http://192.168.1.3:8080/api/subjects/all', { headers: { 'Authorization': "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0dXJzdW5hbGkiLCJpYXQiOjE2ODgxMTg0MzAsImV4cCI6MTY4ODEyMTAyMn0.CdIL0Q1S3sP204Dl7SWZyTLGoAfMcZ4jOqnq996ikz7ROOOWUFbgcIV_2vumIZWAW9g6Rdjk5n9JyMkWPqWb1Q" } })
-                .then((response) => {
-                    let derectionData = response.data
-                    this.massiv = derectionData
-                    
+            document.querySelector('.modal__content').classList.add('modal__show')
+            document.querySelector('body').style = 'overflow: hidden;'
+            axios({
+                method: "get",
+                url: "http://192.168.1.9:8080/api/subjects/all",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(response => {
+                    this.fan = response.data
+                    console.log(response);
                 })
-                .catch(error => console.log(error))
+            // yo'nalish
 
+            axios({
+                method: "get",
+                url: "http://192.168.1.9:8080/api/subjects/sub/all",
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(responseEl => {
+                    this.yonalish = responseEl.data
+                })
+
+            //date
+            const dateObj = new Date();
+            const currentDate = dateObj.getMonth() == 12 ? dateObj.getMonth() : dateObj.getMonth() +1 + "/" + dateObj.getDay() + "/" + dateObj.getFullYear();
+            this.date = currentDate
         },
-        science() {
-            ScienceDerection.append()
+        removeSave() {
+            document.querySelector('.modal__content').classList.remove('modal__show')
+            document.querySelector('body').style = 'overflow: auto;'
+        },
+        getFanData(e){
+            this.selected1 = e.target.value
+            console.log(this.selected1);
+        },
+        getSubData(e){
+            this.selected2 = e.target.value
+            console.log(this.selected2);
+        },
+        changeFile(e){
+            this.file = e.target.files[0]
+            console.log(this.file);
+        },
+        submit(e){
+            console.log("Slaom");
+            let form = new FormData()
+            form.append("sid", this.selected1)
+            form.append("ssid", this.selected2)
+            form.append("description ", this.textareaValue)
+            form.append("photo ", this.file)
+
+            axios.post("http://192.168.1.9:8080/api/org/ss/create", form, {headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}})
+            .then(response => console.log(response))
+            .catch(error => {
+                console.log(error.response.data.message);
+            })
         }
+
     },
-    components:{
+    components: {
         Options,
     },
+
 }
 </script>
 <style></style>
