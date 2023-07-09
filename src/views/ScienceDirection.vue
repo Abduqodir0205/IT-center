@@ -35,20 +35,20 @@
             <div class="modal__content">
                 <form @submit.prevent="submit">
                     <div class="save__btn">
-                        <button  id="save">Saqlash</button>
+                        <button id="save">Saqlash</button>
                         <div id="saveX" @click="removeSave">Bekor qilish</div>
                     </div>
                     <div class="selects">
                         <div>
                             <label class="label" for="">Fan</label>
                             <select id="modal__inputs" @change="getFanData">
-                                <option  v-for="(element, i) in fan" :key="i" :value="element.id">{{ element.name }}</option>
+                                <option v-for="(element, i) in fan" :key="i" :value="element.id">{{ element.name }}</option>
                             </select>
                         </div>
                         <div>
                             <label class="label" for="">Yo'nalish</label>
                             <select id="modal__inputs" @change="getSubData">
-                                <option v-for="(item, i) in yonalish" :key="i"  :value="item.id" >{{ item.name }}</option>
+                                <option v-for="(item, i) in yonalish" :key="i" :value="item.id">{{ item.name }}</option>
                             </select>
                         </div>
                     </div>
@@ -69,7 +69,10 @@
                         </div>
                     </div>
                     <div class="upload">
-                        <input type="file" @change="changeFile">
+                        <input type="file" multiple @change="changeFile">
+                        <div class="image" v-for="(img, i) in images" :key="i">
+                            <img style="width: 150px; height:130px;" :src="img.url" alt="Salom">
+                        </div>
                     </div>
                 </form>
             </div>
@@ -96,7 +99,9 @@ export default {
             selected2: null,
             textareaValue: '',
             file: null,
-
+            // images
+            images: [],
+            changeFileEl: false,
         }
     },
     methods: {
@@ -105,7 +110,7 @@ export default {
             document.querySelector('body').style = 'overflow: hidden;'
             axios({
                 method: "get",
-                url: "http://192.168.1.9:8080/api/subjects/all",
+                url: "http://192.168.1.4:8080/api/subjects/all",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -118,7 +123,7 @@ export default {
 
             axios({
                 method: "get",
-                url: "http://192.168.1.9:8080/api/subjects/sub/all",
+                url: "http://192.168.1.4:8080/api/subjects/sub/all",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
@@ -129,26 +134,40 @@ export default {
 
             //date
             const dateObj = new Date();
-            const currentDate = dateObj.getMonth() == 12 ? dateObj.getMonth() : dateObj.getMonth() +1 + "/" + dateObj.getDay() + "/" + dateObj.getFullYear();
+            const currentDate = dateObj.getMonth() == 12 ? dateObj.getMonth() : dateObj.getMonth() + 1 + "/" + dateObj.getDay() + "/" + dateObj.getFullYear();
             this.date = currentDate
         },
         removeSave() {
             document.querySelector('.modal__content').classList.remove('modal__show')
             document.querySelector('body').style = 'overflow: auto;'
         },
-        getFanData(e){
+        getFanData(e) {
             this.selected1 = e.target.value
             console.log(this.selected1);
         },
-        getSubData(e){
+        getSubData(e) {
             this.selected2 = e.target.value
             console.log(this.selected2);
         },
-        changeFile(e){
+        changeFile(e) {
+            // console.log(this.file);
+
+            const files = e.target.files
+            if (files.length === 0) return;
+            for (let i = 0; i < 1; i++) {
+                if (files[i].type.split('/')[0] != 'image') continue;
+                if (!this.changeFileEl) {
+                    if (!this.images.some((e) => e.name === files[i].name)) {
+                        this.images.push({ name: files[i].name, url: URL.createObjectURL(files[i]) });
+                        this.changeFileEl = true
+                    }
+                }
+            }
             this.file = e.target.files[0]
-            console.log(this.file);
+
+
         },
-        submit(e){
+        submit(e) {
             console.log("Slaom");
             let form = new FormData()
             form.append("sid", this.selected1)
@@ -156,11 +175,12 @@ export default {
             form.append("description ", this.textareaValue)
             form.append("photo ", this.file)
 
-            axios.post("http://192.168.1.9:8080/api/org/ss/create", form, {headers: {Authorization: `Bearer ${localStorage.getItem("token")}`}})
-            .then(response => console.log(response))
-            .catch(error => {
-                console.log(error.response.data.message);
-            })
+            axios.post("http://192.168.1.4:8080/api/org/ss/create", form, { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
+                .then(response => console.log(response))
+                .catch(error => {
+                    console.log(error.response.data.message);
+                })
+                
         }
 
     },
