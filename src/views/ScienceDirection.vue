@@ -89,7 +89,7 @@
 // let ScienceDerection = new FormData()
 import axios from 'axios'
 import Options from '../components/options.vue'
-import api from '../services/services.js'
+import api from '../services/baseHttp.js'
 export default {
   data() {
     return {
@@ -138,6 +138,19 @@ export default {
         this.yonalish = responseEl.data
       })
 
+      // api.get('subjects/sub/all').then((responseEl) => {
+      //   this.yonalish = responseEl.data
+      // })
+
+      // let form = new FormData()
+      // form.append('sid', this.selected1)
+      // form.append('ssid', this.selected2)
+      // form.append('description ', this.textareaValue)
+      // form.append('photo ', this.file)
+
+      // api.post('/subject', form)
+
+
       //date
       const dateObj = new Date()
       const currentDate =
@@ -175,7 +188,9 @@ export default {
       this.file = e.target.files[0]
     },
     submit(e) {
-      console.log('Slaom')
+      document.querySelector('.modal__content').classList.remove('modal__show')
+      document.querySelector('body').style = 'overflow: auto;'
+
       let form = new FormData()
       form.append('sid', this.selected1)
       form.append('ssid', this.selected2)
@@ -186,7 +201,9 @@ export default {
         .post('http://192.168.1.4:8080/api/org/ss/create', form, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         })
-        .then((response) => console.log(response))
+        .then(() => {
+          this.getAllByOrg()
+        })
         .catch((error) => {
           console.log(error.response.data.message)
         })
@@ -200,7 +217,7 @@ export default {
         }
       }).then((response) => {
         this.ssOrgSubjects = response.data
-        console.log(response)
+        console.log(response) 
       })
     },
      async getAllByOrg() {
@@ -239,12 +256,27 @@ export default {
         console.log(response)
       })
     },
+    async refreshAllOrders(){
+      document.querySelector('.modal__content').classList.remove('modal__show')
+      axios({
+        method: 'get',
+        url: 'http://192.168.1.4:8080/api/org/ss/all-by-org',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }).then((response) => {
+        if(response.status == 200){
+          this.allByOrg = response.data
+        console.log('this:',response)
+        }
+      })
+    }
   },
   components: {
     Options
   },
   async mounted() {
-    this.getSs(), this.getAllByOrg()
+    this.getSs(), this.getAllByOrg(), this.refreshAllOrders()
   }
 }
 </script>

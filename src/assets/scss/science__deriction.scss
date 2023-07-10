@@ -66,6 +66,11 @@
           justify-content: space-between;
           align-items: center;
         }
+        > img{
+          width: 254px;
+          height: 152px;
+          object-fit: cover;
+        }
       }
     }
   }
@@ -85,9 +90,8 @@
       position: fixed;
       top: 20px;
       left: 26%;
-      transform: scale(0);
       transition: 0.2s;
-      display: flex;
+      display: none;
       justify-content: center;
       padding-bottom: 20px;
       form {
@@ -185,6 +189,7 @@
 
     .modal__show {
       transform: scale(1);
+      display: flex;
     }
   }
 }
