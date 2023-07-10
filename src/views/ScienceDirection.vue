@@ -8,9 +8,10 @@
           <button @click="add"><span>+</span>New Task</button>
         </div>
         <div class="science__departments">
-          <ul class="ulllll">
+          <ul class="ulllll snap-mandatory snap-x">
             <li @click="filterAllOrders()">Barchasi</li>
             <li
+            class="break-normal snap-center"
               v-for="(ignition, i) in ssOrgSubjects"
               :key="i"
               @click="filterByOrders(ignition.id)"
