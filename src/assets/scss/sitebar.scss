@@ -118,13 +118,16 @@
 
             .dropdown__p:hover {
                 text-decoration-line: underline;
-            }
-
+            }   
+            
         }
     }
 
     .dropdown:hover .dropdown__content {
         display: block;
+    }
+    .dropdown__img2:hover{
+        transform: rotate(180deg);
     }
 
     .apps {
