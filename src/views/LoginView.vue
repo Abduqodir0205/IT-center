@@ -26,6 +26,7 @@
 import axios from 'axios'
 var form = new FormData()
 
+
 export default {
     name: 'CreatPost',
     data() {
@@ -38,7 +39,7 @@ export default {
         user() {
             form.append('username', this.username)
             form.append('password', this.password)
-            axios.post('http://192.168.1.4:8080/api/auth/login', form)
+            axios.post('http://192.168.1.3:8080/api/auth/login', form)
             .then((response)=>{
                 let status = response.status
                 localStorage.setItem('token', response.data.token)
@@ -47,8 +48,8 @@ export default {
                 }
             })
             .catch(error => console.log(error))
+
         }
     },
 }
 </script>
-<style></style>

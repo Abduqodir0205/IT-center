@@ -12,7 +12,6 @@
 import Navbar from '../components/navbar.vue'
 import ScienceDirection from './ScienceDirection.vue'
 import SiteBar from '../components/sitebar.vue'
-import axios from 'axios'
 export default {
   data() {
     return {
@@ -39,6 +38,8 @@ export default {
 
 SiteBar {
   grid-area: a;
+  height: 1000px;
+  overflow-y: scroll;
 }
 
 Navbar {

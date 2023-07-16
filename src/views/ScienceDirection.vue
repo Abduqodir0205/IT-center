@@ -11,7 +11,7 @@
           <ul class="ulllll snap-mandatory snap-x">
             <li @click="filterAllOrders()">Barchasi</li>
             <li
-            class="break-normal snap-center"
+              class="break-normal snap-center"
               v-for="(ignition, i) in ssOrgSubjects"
               :key="i"
               @click="filterByOrders(ignition.id)"
@@ -27,15 +27,15 @@
               <img src="../assets/images/svg/ShapeMore.svg" alt="" />
             </div>
             <p>
-             {{ orders.description }}
+              {{ orders.description }}
             </p>
-             <img :src="orders.imageStore" alt="" />
+            <img :src="orders.imageStore" alt="" />
           </div>
         </div>
       </div>
     </div>
     <div class="modal drop-shadow-2xl">
-      <div class="modal__content">
+      <div class="modal__content" :class="{ modal__show: isActive }">
         <form @submit.prevent="submit">
           <div class="save__btn">
             <button id="save">Saqlash</button>
@@ -87,7 +87,6 @@
   </div>
 </template>
 <script>
-// let ScienceDerection = new FormData()
 import axios from 'axios'
 import Options from '../components/options.vue'
 import api from '../services/baseHttp.js'
@@ -110,38 +109,32 @@ export default {
       displayOrder: true,
       // images
       images: [],
-      changeFileEl: false
+      changeFileEl: false,
+      isActive: false
     }
   },
   methods: {
     add() {
       document.querySelector('.modal__content').classList.add('modal__show')
       document.querySelector('body').style = 'overflow: hidden;'
-      axios({
-        method: 'get',
-        url: 'http://192.168.1.4:8080/api/subjects/all',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((response) => {
+      api.get('subjects/all').then((response) => {
         this.fan = response.data
-        console.log(response)
       })
       // yo'nalish
 
-      axios({
-        method: 'get',
-        url: 'http://192.168.1.4:8080/api/subjects/sub/all',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((responseEl) => {
-        this.yonalish = responseEl.data
-      })
-
-      // api.get('subjects/sub/all').then((responseEl) => {
+      // axios({
+      //   method: 'get',
+      //   url: 'http://192.168.1.15:8080/api/subjects/sub/all',
+      //   headers: {
+      //     Authorization: `Bearer ${localStorage.getItem('token')}`
+      //   }
+      // }).then((responseEl) => {
       //   this.yonalish = responseEl.data
       // })
+
+      api.get('subjects/sub/all').then((responseEl) => {
+        this.yonalish = responseEl.data
+      })
 
       // let form = new FormData()
       // form.append('sid', this.selected1)
@@ -150,7 +143,6 @@ export default {
       // form.append('photo ', this.file)
 
       // api.post('/subject', form)
-
 
       //date
       const dateObj = new Date()
@@ -197,79 +189,53 @@ export default {
       form.append('ssid', this.selected2)
       form.append('description ', this.textareaValue)
       form.append('photo ', this.file)
-
-      axios
-        .post('http://192.168.1.4:8080/api/org/ss/create', form, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
-        .then(() => {
-          this.getAllByOrg()
-        })
-        .catch((error) => {
-          console.log(error.response.data.message)
-        })
+    console.log("this form:", this.file);
+      // axios
+      //   .post('http://192.168.1.15:8080/api/org/ss/create', form, {
+      //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      //   })
+      //   .then(() => {
+      //     this.getAllByOrg()
+      //     this.getSs()
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.response.data.message)
+      //   })
+      // api
+      //   .post('org/ss/create', form)
+      //   .then(() => {
+      //     this.getAllByOrg()
+      //     this.getSs()
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.response.data.message)
+      //   })
     },
     async getSs() {
-      axios({
-        method: 'get',
-        url: 'http://192.168.1.4:8080/api/org/ss/org-subjects',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((response) => {
+      api.get('org/ss/org-subjects').then((response) => {
+        console.log('this: ', response)
         this.ssOrgSubjects = response.data
-        console.log(response) 
       })
     },
-     async getAllByOrg() {
-      axios({
-        method: 'get',
-        url: 'http://192.168.1.4:8080/api/org/ss/all-by-org',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((response) => {
+    async getAllByOrg() {
+      api.get('org/ss/all-by-org').then((response) => {
         this.allByOrg = response.data
-        console.log(response)
       })
     },
     async filterByOrders(id) {
-      axios({
-        method: 'get',
-        url: `http://192.168.1.4:8080/api/org/ss/ss-by-org?sid=${id}`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((response) => {
+      api.get(`org/ss/ss-by-org?sid=${id}`).then((response) => {
         this.allByOrg = response.data
-        console.log(response);
       })
     },
     filterAllOrders() {
-      axios({
-        method: 'get',
-        url: 'http://192.168.1.4:8080/api/org/ss/all-by-org',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((response) => {
+      api.get(`org/ss/all-by-org`).then((response) => {
         this.allByOrg = response.data
-        console.log(response)
       })
     },
-    async refreshAllOrders(){
+    async refreshAllOrders() {
       document.querySelector('.modal__content').classList.remove('modal__show')
-      axios({
-        method: 'get',
-        url: 'http://192.168.1.4:8080/api/org/ss/all-by-org',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      }).then((response) => {
-        if(response.status == 200){
-          this.allByOrg = response.data
-        console.log('this:',response)
-        }
+      api.get(`org/ss/all-by-org`).then((response) => {
+        this.allByOrg = response.data
       })
     }
   },
