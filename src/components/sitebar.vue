@@ -1,5 +1,4 @@
 <template>
-    <div class="container">
         <div class="sitebar">
             <div class="sitebar__top">
                 <img src="../assets/images/svg/logo.svg" alt="">
@@ -63,7 +62,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
 export default {

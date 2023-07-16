@@ -3,7 +3,7 @@
     <SiteBar />
     <div>
       <Navbar />
-      <ScienceDirection />
+      <TeacherFormView />
     </div>
    
   </div>
@@ -12,6 +12,7 @@
 import Navbar from '../components/navbar.vue'
 import ScienceDirection from './ScienceDirection.vue'
 import SiteBar from '../components/sitebar.vue'
+import TeacherFormView from './TeacherFormView.vue'
 export default {
   data() {
     return {
@@ -21,6 +22,7 @@ export default {
     Navbar,
     ScienceDirection,
     SiteBar,
+    TeacherFormView,
   },
   methods: {
   },
@@ -38,8 +40,6 @@ export default {
 
 SiteBar {
   grid-area: a;
-  height: 1000px;
-  overflow-y: scroll;
 }
 
 Navbar {
