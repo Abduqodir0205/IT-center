@@ -19,16 +19,16 @@
                         <p class="analysis__p">Analytics</p>
                         <img class="analysis__img2" src="../assets/images/svg/new.svg" alt="">
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown" @click="dropContent = !dropContent">
                         <div class="dropdown__child">
                             <img class="dropdown__img" src="../assets/images/png/Iconebox.png" alt="">
-                        <span class="dropdown__span">E-commerce</span>
+                        <span class="dropdown__span">Ichki tizim</span>
                         <img class="dropdown__img2" src="../assets/images/svg/sitebar__top.svg" alt="">
                         </div>
-                        <div class="dropdown__content">
-                            <p class="dropdown__p">Orders</p>
-                            <p class="dropdown__p">Customers</p>
-                            <p class="dropdown__p">Invoices</p>
+                        <div class="dropdown__content" v-show="dropContent">
+                            <p class="dropdown__p">Hodimlar</p>
+                            <p class="dropdown__p">O’qituvchilar</p>
+                            <p class="dropdown__p">Dars jadvallari</p>
                         </div>
                     </div>
                     <div class="apps">
@@ -67,7 +67,11 @@
 </template>
 <script>
 export default {
-
+    data() {
+        return {
+            dropContent: false
+        }
+    },
 }
 </script>
 <style></style>

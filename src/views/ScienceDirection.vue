@@ -9,12 +9,16 @@
         </div>
         <div class="science__departments">
           <ul class="ulllll snap-mandatory snap-x">
-            <li @click="filterAllOrders()">Barchasi</li>
+            <li @click="getAllByOrg()" 
+            :class="{ active: all }">
+            Barchasi
+            </li>
             <li
               class="break-normal snap-center"
               v-for="(ignition, i) in ssOrgSubjects"
               :key="i"
-              @click="filterByOrders(ignition.id)"
+              @click="filterByOrders(ignition.id, i)"
+              :class="{ active: i === activeClass }"
             >
               {{ ignition.name }}
             </li>
@@ -34,65 +38,73 @@
         </div>
       </div>
     </div>
-    <div class="modal drop-shadow-2xl">
-      <div class="modal__content" :class="{ modal__show: isActive }">
-        <form @submit.prevent="submit">
-          <div class="save__btn">
-            <button id="save">Saqlash</button>
-            <div id="saveX" @click="removeSave">Bekor qilish</div>
-          </div>
-          <div class="selects">
-            <div>
-              <label class="label" for="">Fan</label>
-              <select id="modal__inputs" @change="getFanData">
-                <option v-for="(element, i) in fan" :key="i" :value="element.id">
-                  {{ element.name }}
-                </option>
-              </select>
-            </div>
-            <div>
-              <label class="label" for="">Yo'nalish</label>
-              <select id="modal__inputs" @change="getSubData">
-                <option v-for="(item, i) in yonalish" :key="i" :value="item.id">
-                  {{ item.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="datas">
-            <div>
-              <label class="label" for="">Ochilgan sana</label>
-              <input disabled="false" id="modal__inputs" type="text" v-model="date" />
-            </div>
-            <div>
-              <label class="label" for="">Yopilish sana</label>
-              <input id="modal__inputs" type="date" placeholder="12.12.2023" />
-            </div>
+    <div class="overlay" v-show="modal"></div>
+
+    <div class="modal__content" :class="{ modal__show: modal }">
+      <form @submit.prevent="submit">
+        <div class="save__btn">
+          <button id="save">Saqlash</button>
+          <div id="saveX" @click="modal = !modal">Bekor qilish</div>
+        </div>
+        <div class="selects">
+          <div>
+            <label class="label" for="">Fan</label>
+            {{ form.sid }}
+            <select id="modal__inputs" @change="getFanData" v-model="form.sid">
+              <option v-for="(element, i) in fan" :key="i" :value="element.id">
+                {{ element.name }}
+              </option>
+            </select>
           </div>
           <div>
-            <label class="label" for="">Qisqacha ma’lumot</label>
-            <div class="texterya">
-              <textarea cols="30" rows="5" v-model="textareaValue"></textarea>
-            </div>
+            <label class="label" for="">Yo'nalish</label>
+            <select id="modal__inputs" @change="getSubData" v-model="form.ssid">
+              <option v-for="(item, i) in yonalish" :key="i" :value="item.id">
+                {{ item.name }}
+              </option>
+            </select>
           </div>
-          <div class="upload">
-            <input type="file" multiple @change="changeFile" />
-            <div class="image" v-for="(img, i) in images" :key="i">
-              <img style="width: 150px; height: 130px" :src="img.url" alt="Salom" />
-            </div>
+        </div>
+        <div class="datas">
+          <div>
+            <label class="label" for="">Ochilgan sana</label>
+            <input disabled="false" id="modal__inputs" type="text" v-model="date" />
           </div>
-        </form>
-      </div>
+          <div>
+            <label class="label" for="">Yopilish sana</label>
+            <input id="modal__inputs" type="date" placeholder="12.12.2023" />
+          </div>
+        </div>
+        <div>
+          <label class="label" for="">Qisqacha ma’lumot</label>
+          <div class="texterya">
+            <textarea cols="30" rows="5" v-model="form.description"></textarea>
+          </div>
+        </div>
+        <div class="upload">
+          <input type="file" :multiple="false" @change="changeFile" />
+          <div class="image" v-if="selectedImage?.url">
+            <img :src="selectedImage.url" alt="Salom" />
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 <script>
-import axios from 'axios'
-import Options from '../components/options.vue'
-import api from '../services/baseHttp.js'
+import Options from '../components/options.vue';
+import api from '../services/baseHttp.js';
+
+const FORM = {
+  description: '',
+  photo: '',
+  sid: '',
+  ssid: ''
+}
 export default {
   data() {
     return {
+      form: {...FORM},
       scienceName: '',
       directionName: '',
       message: '',
@@ -107,33 +119,32 @@ export default {
       ssOrgSubjects: '',
       allByOrg: [],
       displayOrder: true,
-      // images
-      images: [],
+      selectedImage:  {},
       changeFileEl: false,
-      isActive: false
+      modal: false,
+      activeClass: null,
+      all: true
+    }
+  },
+  watch: {
+    modal(val) {
+      console.log(val, 'modal');
+      if(!val) {  
+        this.form = {...FORM}
+        this.selectedImage = {}
+      }
     }
   },
   methods: {
     add() {
-      document.querySelector('.modal__content').classList.add('modal__show')
-      document.querySelector('body').style = 'overflow: hidden;'
+      this.modal = true
       api.get('subjects/all').then((response) => {
         this.fan = response.data
       })
       // yo'nalish
-
-      // axios({
-      //   method: 'get',
-      //   url: 'http://192.168.1.15:8080/api/subjects/sub/all',
-      //   headers: {
-      //     Authorization: `Bearer ${localStorage.getItem('token')}`
-      //   }
-      // }).then((responseEl) => {
-      //   this.yonalish = responseEl.data
-      // })
-
       api.get('subjects/sub/all').then((responseEl) => {
         this.yonalish = responseEl.data
+        this.form.ssid = this.yonalish[0].id
       })
 
       // let form = new FormData()
@@ -152,46 +163,30 @@ export default {
           : dateObj.getMonth() + 1 + '/' + dateObj.getDay() + '/' + dateObj.getFullYear()
       this.date = currentDate
     },
-    removeSave() {
-      document.querySelector('.modal__content').classList.remove('modal__show')
-      document.querySelector('body').style = 'overflow: auto;'
-    },
-    getFanData(e) {
-      this.selected1 = e.target.value
-      console.log(this.selected1)
-    },
-    getSubData(e) {
-      this.selected2 = e.target.value
-      console.log(this.selected2)
-    },
+    // getFanData(e) {
+    //   this.selected1 = e.target.value
+    // },
+    // getSubData(e) {
+    //   this.selected2 = e.target.value
+    // },
     changeFile(e) {
       // console.log(this.file);
 
       const files = e.target.files
       if (files.length === 0) return
-      for (let i = 0; i < 1; i++) {
-        if (files[i].type.split('/')[0] != 'image') continue
-        if (!this.changeFileEl) {
-          if (!this.images.some((e) => e.name === files[i].name)) {
-            this.images.push({ name: files[i].name, url: URL.createObjectURL(files[i]) })
-            this.changeFileEl = true
-          }
-        }
-      }
+      this.selectedImage = { name: files[0].name, url: URL.createObjectURL(files[0]) }
       this.file = e.target.files[0]
     },
     submit(e) {
-      document.querySelector('.modal__content').classList.remove('modal__show')
-      document.querySelector('body').style = 'overflow: auto;'
+      
 
       let form = new FormData()
-      form.append('sid', this.selected1)
-      form.append('ssid', this.selected2)
-      form.append('description ', this.textareaValue)
+      form.append('sid', this.form.sid)
+      form.append('ssid', this.form.ssid)
+      form.append('description ', this.form.description)
       form.append('photo ', this.file)
-    console.log("this form:", this.file);
       // axios
-      //   .post('http://192.168.1.15:8080/api/org/ss/create', form, {
+      //   .post('http://192.168.1.3:8080/api/org/ss/create', form, {
       //     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       //   })
       //   .then(() => {
@@ -201,39 +196,39 @@ export default {
       //   .catch((error) => {
       //     console.log(error.response.data.message)
       //   })
-      // api
-      //   .post('org/ss/create', form)
-      //   .then(() => {
-      //     this.getAllByOrg()
-      //     this.getSs()
-      //   })
-      //   .catch((error) => {
-      //     console.log(error.response.data.message)
-      //   })
+      api
+        .post('org/ss/create', form)
+        .then(res => {
+          this.getAllByOrg()
+          this.getSs()
+          this.modal = false
+        })
+        .catch((error) => {
+          console.log(error.response.data.message)
+        })
     },
     async getSs() {
       api.get('org/ss/org-subjects').then((response) => {
-        console.log('this: ', response)
         this.ssOrgSubjects = response.data
+        console.log(response);
       })
     },
     async getAllByOrg() {
+      this.all = true
+      this.activeClass = null
       api.get('org/ss/all-by-org').then((response) => {
         this.allByOrg = response.data
       })
     },
-    async filterByOrders(id) {
+    async filterByOrders(id, index) {
+        this.activeClass = index
+        this.all = false
       api.get(`org/ss/ss-by-org?sid=${id}`).then((response) => {
         this.allByOrg = response.data
       })
     },
-    filterAllOrders() {
-      api.get(`org/ss/all-by-org`).then((response) => {
-        this.allByOrg = response.data
-      })
-    },
     async refreshAllOrders() {
-      document.querySelector('.modal__content').classList.remove('modal__show')
+      this.modal = false
       api.get(`org/ss/all-by-org`).then((response) => {
         this.allByOrg = response.data
       })

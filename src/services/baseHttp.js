@@ -1,13 +1,14 @@
 import axios from 'axios'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 
-const router = useRouter()
-
-const baseURL = 'http://192.168.1.3:8080/api/'
+const baseURL = 'http://192.168.1.24:8080/api/'
 
 const api = axios.create({
     baseURL,
-    headers: {'Content-Type': 'application/json'}
+    // headers: {
+    //     'Content-Type': 'application/json',
+    //     'Accept': 'application/json'
+    // }
 })
 
 api.interceptors.request.use((config) => {
@@ -19,10 +20,12 @@ api.interceptors.request.use((config) => {
 })
 
 api.interceptors.response.use(config => config, error => {
-    if(error?.response?.data?.status === 401) {
-        router.push('login')
+    if(error?.response?.status === 401) {
+        router.push('/login')
         localStorage.removeItem('token')
     }
+
+    return Promise.reject(error)
 })
 
 
