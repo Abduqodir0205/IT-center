@@ -11,9 +11,11 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@vueform/multiselect": "^2.6.2",
     "axios": "^1.4.0",
     "pinia": "^2.1.3",
     "vue": "^3.3.4",
+    "vue-multiselect": "^2.1.7",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
