@@ -1,33 +1,40 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
+import LoginView from '../views/auth/LoginView.vue'
 // import { useCookies } from 'vue3-cookies';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: LoginView
     },
     {
-      path: '/home',
-      name: 'home',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/HomeView.vue')
+      path: '/',
+      component: () => import('../layouts/HomeView.vue'),
+      children: [
+        {
+          path: '/science',
+          name: 'science',
+          component: () => import('../views/ScienceDirection.vue')
+        },
+        {
+          path: '/employees',
+          name: 'employees',
+          component: () => import('../views/EmployeesView.vue')
+        }
+      ]
     }
   ]
 })
 
+ 
+
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  console.log(token);
-  console.log(to, 'to');
-  console.log(from, 'from');
-  if(!token && to.name !== 'login') {
-    next({name: 'login'})
+  if(!token && to.name == 'cart') {
+    next({name: 'home'})
   } else {
     if(token) {
       next()

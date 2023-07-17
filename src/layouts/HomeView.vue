@@ -3,14 +3,13 @@
     <SiteBar />
     <div>
       <Navbar />
-      <ScienceDirection />
+      <router-view />
     </div>
    
   </div>
 </template>
 <script>
 import Navbar from '../components/navbar.vue'
-import ScienceDirection from './ScienceDirection.vue'
 import SiteBar from '../components/sitebar.vue'
 export default {
   data() {
@@ -19,7 +18,6 @@ export default {
   },
   components: {
     Navbar,
-    ScienceDirection,
     SiteBar,
   },
   methods: {
