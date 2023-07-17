@@ -21,3 +21,33 @@
     background: rgba(217, 217, 217, 0.30);
     backdrop-filter: blur(6px);
 }
+
+body {
+    background: #F5F5FA;
+}
+
+.title {
+    color: #1E293B;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 40px;
+}
+
+.btn {
+    display: inline-flex;
+    padding: 14px 18px 14px 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    border-radius: 9px;
+    background: #7364FF;
+    color: var(--white, #FFF);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+input, select{
+    outline: none;
+    background: transparent;
+}

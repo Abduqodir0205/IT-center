@@ -1,8 +1,6 @@
 <template>
   <div class="science">
-    <div class="container">
       <div class="science__content">
-        <div class="stories"></div>
         <div class="science-direction">
           <h1>Yo’nalishlar</h1>
           <button @click="add"><span>+</span>New Task</button>
@@ -37,7 +35,6 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="overlay" v-show="modal"></div>
 
     <div class="modal__content" :class="{ modal__show: modal }">
@@ -140,6 +137,7 @@ export default {
       this.modal = true
       api.get('subjects/all').then((response) => {
         this.fan = response.data
+        this.form.sid = this.fan[0].id
       })
       // yo'nalish
       api.get('subjects/sub/all').then((responseEl) => {

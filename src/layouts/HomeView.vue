@@ -1,11 +1,10 @@
 <template>
   <div class="view">
     <SiteBar />
-    <div>
-      <Navbar />
+    <Navbar />
+    <div class="ccc">
       <router-view />
     </div>
-   
   </div>
 </template>
 <script>
@@ -13,38 +12,36 @@ import Navbar from '../components/navbar.vue'
 import SiteBar from '../components/sitebar.vue'
 export default {
   data() {
-    return {
-    }
+    return {}
   },
   components: {
     Navbar,
-    SiteBar,
+    SiteBar
   },
-  methods: {
-  },
-  }
+  methods: {}
+}
 </script>
-<style>
+<style lang="scss">
 .view {
   display: grid;
+  gap: 0;
+  grid-template-rows: auto 1fr auto; 
+  grid-template-columns: repeat(6, 1fr);
+  min-height: 100vh;
   grid-template-areas:
-    'a b b b'
-    'a c c c'
-    'a c c c'
-    'a c c c';
-}
+    'sidebar nav nav nav nav nav'
+    'sidebar main main main main main'
+    'sidebar main main main main main';
+  .sss {
+    grid-area: sidebar;
+    min-height: 100vh;
 
-SiteBar {
-  grid-area: a;
-  height: 1000px;
-  overflow-y: scroll;
-}
-
-Navbar {
-  grid-area: b;
-}
-
-ScienceDirection {
-  grid-area: c;
+  }
+  .nnn {
+    grid-area: nav;
+  }
+  .ccc {
+    grid-area: main;
+  }
 }
 </style>

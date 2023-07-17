@@ -2,9 +2,6 @@
   background: #f5f5fa;
   position: relative;
   padding: 10px 30px;
-  height: calc(100vh - 104px);
-  overflow-y: auto;
-
   .science__content {
     display: flex;
     flex-direction: column;
@@ -18,7 +15,7 @@
 
       button {
         display: flex;
-        width: 158.991px;
+        width: 158.9px;
         padding: 10px 18px 10px 12px;
         justify-content: center;
         align-items: center;
