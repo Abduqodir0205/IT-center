@@ -102,8 +102,11 @@
                     <div class="employee__d">
                         <div class="img">
                             <h3>Hodim rasmi</h3>
+                            <div class="employee-d__img" v-if="selectedImageEl?.url">
+                                <img class="employee__img" :src="selectedImageEl.url" alt="Salom" />
+                            </div>
                         </div>
-                        <input type="file" name="file" id="file" class="inputfile" />
+                        <input type="file" name="file" id="file" class="inputfile" :multiple="false" @change="changeFile" />
                         <label for="file">Rasm tanlash</label>
                     </div>
                 </div>
@@ -118,23 +121,33 @@ import strictly from '../components/strictly.vue';
 import Multiselect from '@vueform/multiselect'
 
 export default {
-  components: {
-    Multiselect,
-    strictly
-  },
-  data() {
-    return {
-      value: null,
-      options: [
-        'Batman',
-        'Robin',
-        'Joker',
-      ]
+    components: {
+        Multiselect,
+        strictly
+    },
+    data() {
+        return {
+            value: null,
+            options: [
+                'Batman',
+                'Robin',
+                'Joker',
+            ],
+            selectedImageEl: {},
+            changeFileEl: false,
+        }
+    },
+    methods: {
+        changeFile(e) {
+            // console.log(this.file);
+
+            const files = e.target.files
+            if (files.length === 0) return
+            this.selectedImageEl = { name: files[0].name, url: URL.createObjectURL(files[0]) }
+            this.file = e.target.files[0]
+        },
     }
-  }
 }
 </script>
 
-<style src="@vueform/multiselect/themes/default.css">
-
-</style>
+<style src="@vueform/multiselect/themes/default.css"></style>

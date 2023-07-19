@@ -76,15 +76,25 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      
       .img {
         width: 250px;
-        height: 258px;
+        height: 250px;
         flex-shrink: 0;
         border-radius: 20px;
         background: #F0F0FF;
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
+        .employee-d__img{
+          position: absolute;
+          .employee__img{
+            width: 250px;
+            height: 250px;
+            border-radius: 20px;
+          }
+        }
         h3{
           color: #1E293B;
           font-family: Mulish;
@@ -139,17 +149,56 @@
             height: 90px;
           }
           .multiselect-tags{
-            padding: 10px;
+            padding: 5px;
             display: flex;
             align-items: start;
+           
+            .multiselect-tag{
+              border-radius: 20px;
+              background: #E0E7FF;
+              color: var(--main, #5D5FEF);
+              font-family: Inter;
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: normal;
+              padding: 3px 7px;
+            }
+          }
+          .multiselect-dropdown{
+            
+            .multiselect-options{
+              padding: 5px 10px;
+              display: flex;
+              flex-direction: row;
+              gap: 10px;
+              
+              .multiselect-option{
+                border-radius: 20px;
+                background: #E0E7FF;
+                color: var(--main, #5D5FEF);
+                font-family: Inter;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+                padding: 4px 12px;
+              }
+            }
           }
 
         .multiselect-tags-search{
-            // border: none;
+            border: none;
             box-shadow: none;
             width: 100%;
-            height: 20px;
-            // padding-bottom: 70px;
+            height: 70px;
+            padding-bottom: 48px;
+        }
+        .multiselect-caret{
+          display: none;
+        }
+        .multiselect-clear{
+          padding-bottom: 45px;
         }
       }
     }
