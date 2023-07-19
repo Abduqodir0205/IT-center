@@ -11,7 +11,7 @@
         </div>
         <div class="dashboard">
           <img src="../assets/images/svg/dashboard.svg" alt="" />
-          <p class="dashboard__p">Dashboard</p>
+          <router-link :to="{ name: 'teachersfrom' }" class="dashboard__p">Dashboard</router-link>
         </div>
         <div class="analysis">
           <img src="../assets/images/svg/analysis.svg" alt="" />
