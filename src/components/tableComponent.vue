@@ -1,10 +1,11 @@
 <template>
   <div class="table">
     <div class="table__top flex justify-between items-center px-6 py-7">
-      <p>Barchasi</p>
+      <p @click="getCategories()">Barchasi</p>
       <p>Ja’mi 22 ta</p>
     </div>
-    <table>
+    <div style="width:100%; height:700px; overflow:auto;">
+      <table cellspacing="0" cellpadding="1" border="1" width="300" >
       <thead>
         <tr>
           <th>
@@ -13,24 +14,24 @@
           <th>FIO</th>
           <th>Address</th>
           <th>Tug’ilgan sanasi</th>
-          <th>Passport</th>
+          <th class="text-center">Passport</th>
           <th>Telefon</th>
           <th>RASMI</th>
           <th>KOPROQ</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="item in 15" :key="item">
+      <tbody style="height: 100px">
+        <tr v-for="(item, i) in this.filter" :key="i">
           <td>
             <input type="checkbox" />
           </td>
-          <td>Tursunali Xorunaliyev Xaydaraliyevich</td>
+          <td>Tursunali Xorunaliyev {{i}}</td>
           <td>Quva t, “Rasta” MFY Bunyodkor 43</td>
           <td>08.07.1998</td>
           <td>AA 1234567</td>
           <td>+998 (99) 123-45-67</td>
           <td>
-            <img src="https://picsum.photos/36/36" alt="" />
+            <img :src="`https://picsum.photos/36/36?random=${i}`" alt="" />
           </td>
           <td>
             <button>
@@ -51,6 +52,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
     <div class="table__bottom flex justify-end py-5 px-6 gap-9 items-center">
       <p>Sahifasiga ma’lumotlar soni: 10</p>
       <p>1-10 87 ta dan</p>
@@ -80,7 +82,9 @@
           </svg>
           <span>Oldingisi</span>
         </button>
-        <button class="right flex items-center gap-1">
+        <button
+        @click="next" 
+        class="right flex items-center gap-1">
           <span>Keyingisi</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -110,8 +114,36 @@
   </div>
 </template>
 
-<script setup>
+<script>
+import api from '../services/baseHttp.js'
+
+export default {
+  data() {
+    return {
+      categories: '',
+      filter: 15,
+    }
+  },
+  methods: {
+    async getCategories() {
+      api.get('physical-stuff/categories').then((response) => {
+        console.log(response)
+        this.categories = response.data
+      })
+    }
+  },
+  computed: {
+    next(){
+      this.filter +=10;
+      console.log(1);
+    }
+  },
+  async mounted() {
+    this.getCategories()
+  }
+}
 </script>
+
 
 <style lang="scss" scoped>
 .table {
@@ -124,25 +156,6 @@
       font-size: 24px;
       font-weight: 500;
       line-height: 28px;
-    }
-  }
-  table {
-    width: 100%;
-    background: red;
-    padding: 20px;
-    height: 200px;
-    overflow-y: scroll;
-    thead {
-      background: #f8fafc;
-      padding: 20px 24px;
-    }
-    tbody {
-      background: red;
-      tr {
-        background: #FFF;
-        border-top: 1px solid #e2e8f0;
-        border-bottom: 1px solid #e2e8f0;
-      }
     }
   }
   &__bottom {
@@ -173,6 +186,64 @@
         background: #f1f2f4;
         color: #b4bfcd;
       }
+    }
+  }
+  table {
+    width: 100%;
+    thead {
+      background: #f8fafc;
+    }
+    tbody {
+      height: 200px;
+      tr {
+        background: #fff;
+        border-top: 1px solid #e2e8f0;
+        border-bottom: 1px solid #e2e8f0;
+      }
+    }
+    td,
+    th {
+      padding: 14px 24px;
+      text-align: center;
+    }
+    input {
+      &[type='checkbox'] {
+        position: relative;
+        cursor: pointer;
+      }
+      &[type='checkbox']:before {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid #E0E7FF;
+        border-radius: 3px;
+        background-color: white;
+      }
+      &[type='checkbox']:checked:after {
+        content: '';
+        display: block;
+        width: 6px;
+        height: 12px;
+        border: solid #10B981;
+        border-width: 0 2px 2px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        position: absolute;
+        top: -1px;
+        left: 4px;
+      }
+    }
+    img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      margin: 0 auto;
     }
   }
 }

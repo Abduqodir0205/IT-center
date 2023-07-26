@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '@/router'
 
-const baseURL = 'http://192.168.1.24:8080/api/'
+const baseURL = 'http://192.168.1.25:8080/api/'
 
 const api = axios.create({
     baseURL,
