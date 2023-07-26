@@ -52,37 +52,4 @@
             }
         }
     }
-
-    &__menu {
-        .select {
-            width: 210px;
-            padding: 10px 12px;
-            border-radius: 4px;
-            border: 1px solid var(--stroke, #E2E8F0);
-            background: #FFF;
-            box-shadow: 2px 4px 10px 0px rgba(180, 191, 205, 0.12);
-
-            select {
-                -webkit-appearance: none;
-                color: #64748B;
-                font-size: 18px;
-                font-weight: 500;
-                line-height: 22px;
-            }
-        }
-
-        .filter {
-            display: flex;
-            width: 50px;
-            height: 50px;
-            padding: 10px;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            border-radius: 9px;
-            border: 1px solid var(--stroke, #E2E8F0);
-            background: #FFF;
-            box-shadow: 2px 4px 10px 0px rgba(180, 191, 205, 0.20);
-        }
-    }
 }
