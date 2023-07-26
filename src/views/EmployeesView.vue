@@ -39,7 +39,9 @@
           </svg>
           <input type="text" placeholder="Hodimlar bo’yicha qidirish" />
         </div>
-       <BaseButton class="btn btn-green">Yangi hodim</BaseButton>
+        <BaseButton class="btn btn-green">
+          <router-link :to="{ name: 'teachersfrom' }">Yangi hodim</router-link>
+        </BaseButton>
       </div>
     </div>
     <div class="employees__menu mb-11 flex justify-between items-start">
@@ -48,7 +50,7 @@
         <li v-for="item in 3" :key="item">O’qituvchilar <span>15</span></li>
       </ul>
       <div>
-       <BaseButton class="btn">Lavozimga tayinlash</BaseButton>
+        <BaseButton class="btn">Lavozimga tayinlash</BaseButton>
       </div>
     </div>
     <div class="employees__table">
@@ -58,9 +60,9 @@
 </template>
 
 <script setup>
-import BaseButton from '../components/baseButton.vue';
-import TableComponent from '../components/tableComponent.vue';
-import { ref } from 'vue';
+import BaseButton from '../components/baseButton.vue'
+import TableComponent from '../components/tableComponent.vue'
+import { ref } from 'vue'
 </script>
 
 <style lang="scss" scoped>
