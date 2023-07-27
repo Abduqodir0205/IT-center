@@ -1,7 +1,7 @@
 <template>
   <div class="table">
     <div class="table__top flex justify-between items-center px-6 py-7">
-      <p @click="getCategories()">Barchasi</p>
+      <p>Barchasi</p>
       <p>Ja’mi 22 ta</p>
     </div>
     <div style="width: 100%; height: 700px; overflow: auto">
@@ -117,23 +117,15 @@
 </template>
 
 <script>
-import api from '../services/baseHttp.js'
 
 export default {
   data() {
     return {
-      categories: '',
       filter: 15,
       onDisabled: true
     }
   },
   methods: {
-    // async getCategories() {
-    //   api.get('physical-stuff/categories').then((response) => {
-    //     console.log(response)
-    //     this.categories = response.data
-    //   })
-    // }
     prev() {
       if (this.filter > 15) {
         this.filter -= 10
@@ -148,9 +140,6 @@ export default {
       console.log(1)
     }
   },
-  async mounted() {
-    // this.getCategories()
-  }
 }
 </script>
 

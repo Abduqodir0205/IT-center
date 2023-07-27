@@ -39,18 +39,20 @@
           </svg>
           <input type="text" placeholder="Hodimlar bo’yicha qidirish" />
         </div>
-        <BaseButton class="btn btn-green">
-          <router-link :to="{ name: 'teachersfrom' }">Yangi hodim</router-link>
-        </BaseButton>
+        <router-link :to="{ name: 'teachersform' }">
+          <BaseButton class="btn btn-green"> Yangi hodim </BaseButton>
+        </router-link>
       </div>
     </div>
     <div class="employees__menu mb-11 flex justify-between items-start">
       <ul class="employees__tab">
         <li class="active">Barchasi <span>22</span></li>
-        <li v-for="item in 3" :key="item">O’qituvchilar <span>15</span></li>
+        <li v-for="(category, i) in categories" :key="i">
+          {{ category.category.name }} <span>{{ category.countFaces }}</span>
+        </li>
       </ul>
       <div>
-        <BaseButton class="btn">Lavozimga tayinlash</BaseButton>
+        <BaseButton @click="getCategories" class="btn">Lavozimga tayinlash</BaseButton>
       </div>
     </div>
     <div class="employees__table">
@@ -63,7 +65,15 @@
 import BaseButton from '../components/baseButton.vue'
 import TableComponent from '../components/tableComponent.vue'
 import { ref } from 'vue'
+import api from '../services/baseHttp.js'
+
+const categories = ref('')
+
+async function getCategories() {
+  api.get('physical-stuff/categories').then((response) => {
+    categories.value = response.data
+  })
+}
+getCategories()
 </script>
 
-<style lang="scss" scoped>
-</style>

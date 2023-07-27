@@ -4,6 +4,7 @@
         <div class="middle">
             <div class="left">
                 <h1>Yangi hodim</h1>
+                <DropdownComponent />
             </div>
             <div class="right">
                 <button>Saqlash</button>
@@ -119,11 +120,13 @@
 
 import strictly from '../components/strictly.vue';
 import Multiselect from '@vueform/multiselect'
+import DropdownComponent from '../components/DropdownComponent.vue';
 
 export default {
     components: {
         Multiselect,
-        strictly
+        strictly,
+        DropdownComponent
     },
     data() {
         return {
