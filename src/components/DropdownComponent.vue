@@ -1,7 +1,7 @@
 <template >
   <div>
-    <div v-if="fa " class="left dropdown">
-      <div @click="openOptions" class="dropdawon width flex justify-between">
+    <div v-if="false" class="left dropdown">
+      <div @click="openOptions" class="dropdawon   flex justify-between">
         <h2>{{this.datas}}</h2>
         <div :class="{ rotate: rotation }">
           <svg
@@ -21,7 +21,7 @@
           </svg>
         </div>
       </div>
-      <div v-show="isActivei" class="dropdown_two_foot flex justify-between">
+      <div v-show="isActivei" class="dropdown_two_foot dropdown_width flex justify-between">
         <h2
           v-for="(country, i) in this.countries"
           :key="i"
@@ -183,6 +183,9 @@ export default {
   }
 }
 .left{
+    .dropdown_width{
+      width: 214px;
+    }
   .dropdawon{
     width: 214px;
     padding: 12px 18px;
@@ -202,7 +205,6 @@ export default {
   .dropdown_two_foot {
     display: flex;
     flex-direction: column;
-    width: 214px;
     gap: 14px;
     border-radius: 9px;
     border: 1px solid rgba(191, 191, 191, 0.25);
