@@ -1,6 +1,6 @@
 <template > 
   <div> 
-    <div v-if="false" class="left dropdown"> 
+    <div v-if="true" class="left dropdown"> 
       <div @click="openOptions" class="dropdawon   flex justify-between"> 
         <h2>{{this.datas}}</h2> 
         <div :class="{ rotate: rotation }"> 
