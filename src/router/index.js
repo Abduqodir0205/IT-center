@@ -28,6 +28,12 @@ const router = createRouter({
           name: 'teachersform',
           component: () => import('../views/TeachersForm.vue')
         },
+      
+        {
+          path: '/counter',
+          name: 'counter',
+          component: () => import('../components/counter.vue')
+        },
       ]
     }
   ]

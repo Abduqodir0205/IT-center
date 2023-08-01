@@ -211,6 +211,9 @@ export default {
     margin-top: 4px;
     background: #fff;
     padding: 16px 18px 18px 18px;
+    h2:hover{
+      cursor: pointer;
+    }
     h2 {
       span {
         color: #4d515a;
@@ -219,15 +222,15 @@ export default {
         line-height: 22px;
       }
       svg{
-        display: none;
+        opacity: 0;
+        
       }
       &.active {
         span {
           color: #5d5fef;
-          cursor: pointer;
         }
         svg{
-            display: block;
+          opacity: 1;
         }
       }
     }
