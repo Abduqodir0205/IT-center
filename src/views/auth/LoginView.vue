@@ -6,9 +6,9 @@
           <h2>Welcome Back!</h2>
           <form class="login__form" @submit.prevent="user">
             <span>Username:</span>
-            <input type="text" id="username" v-model="username" />
+            <input type="text" id="username" name="username" v-model="form.username" />
             <span>Password:</span>
-            <input type="password" id="password" v-model="password" />
+            <input type="password" id="password" name="password" v-model="form.password" />
             <button>Login</button>
           </form>
           <p>Dont have and account?<span>Register</span></p>
@@ -22,34 +22,29 @@
     <div class="login__rot"></div>
   </div>
 </template>
-<script>
-import api from '@/services/baseHttp.js';
-var form = new FormData()
+<script setup>
+import api from '@/services/baseHttp.js'
+import { ref } from 'vue'
+import router from '@/router'
 
-export default {
-  name: 'CreatPost',
-  data() {
-    return {
-      username: '',
-      password: ''
-    }
-  },
-  methods: {
-    user() {
-      form.append('username', this.username)
-      form.append('password', this.password)
-
-      api
-        .post('auth/login', form)
-        .then((response) => {
-          let status = response.status
-          localStorage.setItem('token', response.data.token)
-          if (status == 200) {
-            this.$router.push('/')
-          }
-        })
-        .catch((error) => console.log(error))
-    }
-  }
+const FORM = {
+  username: '',
+  password: ''
+}
+const form = ref({ ...FORM })
+function user() {
+  const formData = new FormData()
+  formData.append('username', form.value.username)
+  formData.append('password', form.value.password)
+  api
+    .post('auth/login', form)
+    .then((response) => {
+      let status = response.status
+      localStorage.setItem('token', response.data.token)
+      if (status == 200) {
+        router.push('/')
+      }
+    })
+    .catch((error) => console.log(error))
 }
 </script>

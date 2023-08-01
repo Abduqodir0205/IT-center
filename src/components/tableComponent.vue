@@ -116,31 +116,45 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import api from '../services/baseHttp.js';
+import { ref } from 'vue';
 
-export default {
-  data() {
-    return {
-      filter: 15,
-      onDisabled: true
-    }
-  },
-  methods: {
-    prev() {
-      if (this.filter > 15) {
-        this.filter -= 10
+async function getInterest() {
+  api.get(`interests/all`).then((response) => {
+    const datas = response.data
+    options.value = datas.map((data) => {
+      return {
+        value: data.id,
+        name: data.name
       }
-      if (his.filter < 15) {
-        this.onDisabled = true
-      }
-    },
-    next() {
-      this.filter += 10
-      this.onDisabled = false
-      console.log(1)
-    }
-  },
+    })
+  })
 }
+getInterest()
+
+// export default {
+//   data() {
+//     return {
+//       filter: 15,
+//       onDisabled: true
+//     }
+//   },
+//   methods: {
+//     prev() {
+//       if (this.filter > 15) {
+//         this.filter -= 10
+//       }
+//       if (his.filter < 15) {
+//         this.onDisabled = true
+//       }
+//     },
+//     next() {
+//       this.filter += 10
+//       this.onDisabled = false
+//     }
+//   },
+// }
 </script>
 
 

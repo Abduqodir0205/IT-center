@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '@/router'
 
-const baseURL = 'http://192.168.1.3:8080/api/'
+const baseURL = 'https://59ce-213-230-114-111.ngrok-free.app/api/'
 
 const api = axios.create({
     baseURL,
@@ -14,6 +14,8 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
     if(token) config.headers.Authorization = `Bearer ${token}`
+    config.headers["ngrok-skip-browser-warning"] = true
+    config.headers['Access-Control-Allow-Origin'] = '*'
     return config
 }, error => {
     return Promise.reject(error)
@@ -27,7 +29,5 @@ api.interceptors.response.use(config => config, error => {
 
     return Promise.reject(error)
 })
-
-
 
 export default api

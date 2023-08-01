@@ -46,7 +46,6 @@
         <div class="selects">
           <div>
             <label class="label" for="">Fan</label>
-            {{ form.sid }}
             <select id="modal__inputs" @change="getFanData" v-model="form.sid">
               <option v-for="(element, i) in fan" :key="i" :value="element.id">
                 {{ element.name }}
@@ -79,7 +78,10 @@
           </div>
         </div>
         <div class="upload">
-          <input type="file" :multiple="false" @change="changeFile" />
+          <input 
+          type="file" 
+          :multiple="false" 
+          @change="changeFile" />
           <div class="image" v-if="selectedImage?.url">
             <img :src="selectedImage.url" alt="Salom" />
           </div>
@@ -132,6 +134,9 @@ export default {
       }
     }
   },
+  async mounted() {
+    this.getSs(), this.getAllByOrg(), this.refreshAllOrders()
+  },
   methods: {
     add() {
       this.modal = true
@@ -168,11 +173,12 @@ export default {
     //   this.selected2 = e.target.value
     // },
     changeFile(e) {
-      // console.log(this.file);
-
       const files = e.target.files
+      console.log(files);
       if (files.length === 0) return
+      console.log(URL);
       this.selectedImage = { name: files[0].name, url: URL.createObjectURL(files[0]) }
+      console.log(this.selectedImage);
       this.file = e.target.files[0]
     },
     submit(e) {
@@ -235,9 +241,6 @@ export default {
   components: {
     Options
   },
-  async mounted() {
-    this.getSs(), this.getAllByOrg(), this.refreshAllOrders()
-  }
 }
 </script>
 <style></style>
