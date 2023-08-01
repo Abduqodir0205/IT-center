@@ -21,7 +21,7 @@
           </tr>
         </thead>
         <tbody style="height: 100px">
-          <tr v-for="(item, i) in this.filter" :key="i">
+          <tr v-for="(item, i) in filter" :key="i">
             <td>
               <input type="checkbox" />
             </td>
@@ -117,44 +117,26 @@
 </template>
 
 <script setup>
-import api from '../services/baseHttp.js';
-import { ref } from 'vue';
+import api from '../services/baseHttp.js'
+import { ref } from 'vue'
 
-async function getInterest() {
-  api.get(`interests/all`).then((response) => {
-    const datas = response.data
-    options.value = datas.map((data) => {
-      return {
-        value: data.id,
-        name: data.name
-      }
-    })
-  })
+const filter = ref(15)
+const onDisabled = ref(true)
+
+function prev() {
+  if (filter.value > 15) {
+    filter.value -= 10
+  }
+  if (filter.value < 15) {
+    onDisabled.value = true
+  }
 }
-getInterest()
 
-// export default {
-//   data() {
-//     return {
-//       filter: 15,
-//       onDisabled: true
-//     }
-//   },
-//   methods: {
-//     prev() {
-//       if (this.filter > 15) {
-//         this.filter -= 10
-//       }
-//       if (his.filter < 15) {
-//         this.onDisabled = true
-//       }
-//     },
-//     next() {
-//       this.filter += 10
-//       this.onDisabled = false
-//     }
-//   },
-// }
+function next() {
+  filter.value += 10
+  onDisabled.value = false
+}
+
 </script>
 
 

@@ -72,7 +72,7 @@
               </div>
               <div class="employee__f employee__global">
                 <label for="">Telefon raqam(Qo'shimcha)</label>
-                <input type="number" placeholder="+998" v-model="form.phone2"/>
+                <input type="tel" placeholder="+998" v-model="form.phone2"/>
               </div>
               <div class="employee__g employee__global">
                 <label for="">Telegram(Username)</label>

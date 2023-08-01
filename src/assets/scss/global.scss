@@ -20,6 +20,12 @@
     left: 0;
     background: rgba(217, 217, 217, 0.30);
     backdrop-filter: blur(6px);
+    z-index: 1000;
+}
+
+.overlay.dark {
+    background: rgba(113, 113, 113, 0.40);
+    backdrop-filter: blur(0px);
 }
 
 body {
@@ -46,10 +52,33 @@ body {
     font-weight: 500;
     line-height: 20px;
 }
-.btn-green{
+
+.btn-green {
     background: #10B981;
 }
-input, select{
+
+input,
+select {
     outline: none;
     background: transparent;
+
+}
+
+.modal__show {
+    transform: translate(-50%, -50%) scale(1) !important;
+    transition: all .3s ease;
+}
+
+.modalEvent-enter-active
+ {
+    transition: all .3s ease;
+    
+}
+.modalEvent-leave-active{
+    transition: all 2.3s ease;
+
+}
+.modalEvent-enter-from,
+.modalEvent-leave-to {
+    transform: translate(-50%, -50%) scale(0) !important;
 }

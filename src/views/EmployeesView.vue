@@ -52,8 +52,51 @@
         </li>
       </ul>
       <div>
-        <BaseButton @click="getCategories" class="btn">Lavozimga tayinlash</BaseButton>
+        <BaseButton @click="modal = !modal" class="btn">Lavozimga tayinlash</BaseButton>
       </div>
+      <div class="overlay dark" v-show="modal"></div>
+      <Transition name="modalEvent">
+        <div class="modal" v-show="modal">
+          <h1 class="title">Jismoniy shahslarni lavozimga ta’yinlash</h1>
+          <form class="modal__content" @submit.prevent="postPhysicalStuff">
+            <div>
+              <label for="">Jismoniy shahslar</label>
+              <select v-model="form.fid">
+                <option
+                  v-for="(naturalPerson, i) in naturalPersons"
+                  :key="i"
+                  :value="naturalPerson.id"
+                >
+                  {{ naturalPerson.firstName }} 
+                  {{ naturalPerson.lastName }}
+                  {{ naturalPerson.middleName }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label for="">Lavozimlar</label>
+              <select v-model="form.cid">
+                <option 
+                v-for="(position, i) in positionUser" :key="i"  
+                :value="position.id" >{{position.name}}</option>
+              </select>
+            </div>
+            <div>
+              <label for="">Sanadan boshlab</label>
+              {{form.start_date}}
+              <input type="date" v-model="form.start_date" />
+            </div>
+            <div>
+              <label for="">Sanagacha</label>
+              <input type="date" v-model="form.end_date"/>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button @click="modal = false">Bekor qilish</button>
+              <button type="submit" @click="modal = false" class="btn-green">Biriktirish</button>
+            </div>
+          </form>
+        </div>
+      </Transition>
     </div>
     <div class="employees__table">
       <TableComponent></TableComponent>
@@ -68,12 +111,55 @@ import { ref } from 'vue'
 import api from '../services/baseHttp.js'
 
 const categories = ref('')
+const modal = ref(false);
+const naturalPersons = ref([]);
+const positionUser = ref([]);
+
+const FORM = {
+  fid: '',
+  cid: '',
+  end_date: '',
+  start_date: '',
+}
+const form = ref({...FORM});
 
 async function getCategories() {
   api.get('physical-stuff/categories').then((response) => {
     categories.value = response.data
+    console.log(response)
   })
 }
 getCategories()
+
+async function getPhysicalFace() {
+  api.get('physical-face/all').then((response) => {
+    naturalPersons.value = response.data
+    form.value.fid = response.data[0].id
+  })
+}
+getPhysicalFace()
+
+async function getstuffController() {
+  api.get('stuff/all').then((response) => {
+    positionUser.value = response.data
+    form.value.cid = response.data[0].id
+  })
+}
+getstuffController()
+
+async function postPhysicalStuff() {
+  let formData = new FormData()
+  formData.append('fid', form.value.fid)
+  formData.append('cid', form.value.cid)
+  formData.append('start_date', form.value.start_date)
+  formData.append('end_date', form.value.end_date)
+
+  api.post('physical-stuff/create', formData).then(res =>{
+    console.log(res);
+  }).catch((error)=>{
+    console.log(error.response.data.message);
+  })
+}
+getstuffController()
 </script>
 

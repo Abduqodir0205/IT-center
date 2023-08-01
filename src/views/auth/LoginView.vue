@@ -27,17 +27,19 @@ import api from '@/services/baseHttp.js'
 import { ref } from 'vue'
 import router from '@/router'
 
+const formData = new FormData()
+
 const FORM = {
   username: '',
   password: ''
 }
 const form = ref({ ...FORM })
+
 function user() {
-  const formData = new FormData()
   formData.append('username', form.value.username)
   formData.append('password', form.value.password)
   api
-    .post('auth/login', form)
+    .post('auth/login', formData)
     .then((response) => {
       let status = response.status
       localStorage.setItem('token', response.data.token)

@@ -24,6 +24,70 @@
         }
     }
 
+    &__menu {
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001;
+            width: 605px;
+
+            .title {
+                border-radius: 12px 12px 0px 0px;
+                background: #FFF;
+                color: #344054;
+                font-size: 24px;
+                font-weight: 500;
+                line-height: 20px;
+                text-align: center;
+                padding: 33px 0 27px;
+                margin-bottom: 12px;
+            }
+
+            &__content {
+                border-radius: 0px 0px 12px 12px;
+                background: #FFF;
+                padding: 53px 32px 43px 33px;
+                display: flex;
+                flex-direction: column;
+                gap: 34px;
+
+                label {
+                    margin-bottom: 6px;
+                    color: #344054;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    display: block;
+                }
+
+                select, input {
+                    width: 100%;
+                    border-radius: 8px;
+                    border: 1px solid #D0D5DD;
+                    padding: 10px 14px;
+                    background: #FFF;
+                    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+                }
+
+                button {
+                    border-radius: 5px;
+                    background: #DBDBDB;
+                    padding: 14px 18px;
+                    color: #344054;
+                    font-size: 16px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    &.btn-green{
+                        background: #10B981;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
     &__tab {
         display: flex;
         gap: 18px;
@@ -52,4 +116,5 @@
             }
         }
     }
+
 }
