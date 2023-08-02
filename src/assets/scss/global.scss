@@ -24,7 +24,7 @@
 }
 
 .overlay.dark {
-    background: rgba(113, 113, 113, 0.40);
+    background: rgba(113, 113, 113, 0.6);
     backdrop-filter: blur(0px);
 }
 
@@ -75,7 +75,7 @@ select {
     
 }
 .modalEvent-leave-active{
-    transition: all 2.3s ease;
+    transition: all .5s ease;
 
 }
 .modalEvent-enter-from,

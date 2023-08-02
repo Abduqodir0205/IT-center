@@ -4,7 +4,7 @@
       <p>Barchasi</p>
       <p>Ja’mi 22 ta</p>
     </div>
-    <div style="width: 100%; height: 700px; overflow: auto">
+    <div style="width: 100%; max-height: 700px; overflow: auto">
       <table cellspacing="0" cellpadding="1" border="1" width="300">
         <thead>
           <tr>
@@ -21,17 +21,18 @@
           </tr>
         </thead>
         <tbody style="height: 100px">
-          <tr v-for="(item, i) in filter" :key="i">
+          <tr v-for="(item, i) in tableData" :key="i">
             <td>
               <input type="checkbox" />
+              {{item.id}}
             </td>
-            <td>Tursunali Xorunaliyev {{ i }}</td>
-            <td>Quva t, “Rasta” MFY Bunyodkor 43</td>
-            <td>08.07.1998</td>
-            <td>AA 1234567</td>
-            <td>+998 (99) 123-45-67</td>
+            <td>{{item.physicalFace.firstName}} {{item.physicalFace.lastName}}</td>
+            <td>{{item.physicalFace.address}}</td>
+            <td>{{item.physicalFace.birthday}}</td>
+            <td>{{item.physicalFace.personalIdentification}}</td>
+            <td>{{item.physicalFace.primaryPhone}}</td>
             <td>
-              <img :src="`https://picsum.photos/36/36?random=${i}`" alt="" />
+              <img :src="item.physicalFace.photo" :alt="item.physicalFace.id" />
             </td>
             <td>
               <button>
@@ -58,9 +59,7 @@
       <p>1-10 87 ta dan</p>
       <div class="flex gap-3">
         <button
-          @click="prev()"
           class="left flex items-center gap-1"
-          :class="{ disabled: onDisabled }"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +85,7 @@
           </svg>
           <span>Oldingisi</span>
         </button>
-        <button @click="next()" class="right flex items-center gap-1">
+        <button  class="right flex items-center gap-1">
           <span>Keyingisi</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -117,25 +116,11 @@
 </template>
 
 <script setup>
-import api from '../services/baseHttp.js'
-import { ref } from 'vue'
+import api from '../services/baseHttp.js';
+import { ref } from 'vue';
 
-const filter = ref(15)
-const onDisabled = ref(true)
+const {tableData}= defineProps(['tableData'])
 
-function prev() {
-  if (filter.value > 15) {
-    filter.value -= 10
-  }
-  if (filter.value < 15) {
-    onDisabled.value = true
-  }
-}
-
-function next() {
-  filter.value += 10
-  onDisabled.value = false
-}
 
 </script>
 

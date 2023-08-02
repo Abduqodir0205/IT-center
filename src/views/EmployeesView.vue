@@ -46,15 +46,17 @@
     </div>
     <div class="employees__menu mb-11 flex justify-between items-start">
       <ul class="employees__tab">
-        <li class="active">Barchasi <span>22</span></li>
-        <li v-for="(category, i) in categories" :key="i">
+        <li class="active" @click="getPhysicalStuffAll">Barchasi <span>{{tableData.length}}</span></li>
+        <li 
+        v-for="(category, i) in categories" :key="i"
+        @click="getPhysicalStuffCategory(category.category.id)">
           {{ category.category.name }} <span>{{ category.countFaces }}</span>
         </li>
       </ul>
       <div>
         <BaseButton @click="modal = !modal" class="btn">Lavozimga tayinlash</BaseButton>
       </div>
-      <div class="overlay dark" v-show="modal"></div>
+      <div class="overlay dark" v-show="modal" @click="modal = false"></div>
       <Transition name="modalEvent">
         <div class="modal" v-show="modal">
           <h1 class="title">Jismoniy shahslarni lavozimga ta’yinlash</h1>
@@ -91,7 +93,7 @@
               <input type="date" v-model="form.end_date"/>
             </div>
             <div class="flex justify-end gap-3">
-              <button @click="modal = false">Bekor qilish</button>
+              <div class="button" @click="modal = false">Bekor qilish</div>
               <button type="submit" @click="modal = false" class="btn-green">Biriktirish</button>
             </div>
           </form>
@@ -99,7 +101,7 @@
       </Transition>
     </div>
     <div class="employees__table">
-      <TableComponent></TableComponent>
+      <TableComponent :tableData="tableData"></TableComponent>
     </div>
   </div>
 </template>
@@ -114,6 +116,7 @@ const categories = ref('')
 const modal = ref(false);
 const naturalPersons = ref([]);
 const positionUser = ref([]);
+const tableData = ref([]);
 
 const FORM = {
   fid: '',
@@ -126,7 +129,6 @@ const form = ref({...FORM});
 async function getCategories() {
   api.get('physical-stuff/categories').then((response) => {
     categories.value = response.data
-    console.log(response)
   })
 }
 getCategories()
@@ -160,6 +162,24 @@ async function postPhysicalStuff() {
     console.log(error.response.data.message);
   })
 }
-getstuffController()
+
+async function getPhysicalStuffAll() {
+  api.get('physical-stuff/all').then((response) => {
+    tableData.value = response.data
+  })
+}
+getPhysicalStuffAll()
+
+async function getPhysicalStuffCategory(id) {
+  console.log(id);
+  const formData = new FormData()
+  formData.append('cid', id)
+  api
+    .get('physical-stuff/by-category', formData)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => console.log(error))
+}
 </script>
 
