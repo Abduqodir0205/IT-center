@@ -222,9 +222,9 @@ export default {
         opacity: 0; 
       } 
       &.active { 
-        span { 
+        span:hover{ 
           color: #5d5fef; 
-          cursor: pointer; 
+          cursor: pointer;
         } 
         svg{ 
           opacity: 1; 

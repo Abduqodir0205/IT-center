@@ -28,6 +28,11 @@ const router = createRouter({
           name: 'teachersform',
           component: () => import('../views/TeachersForm.vue')
         },
+        {
+          path: '/tabscomponent',
+          name: 'tabscomponent',
+          component: () => import('../components/TabsComponent.vue')
+        },
       ]
     }
   ]
