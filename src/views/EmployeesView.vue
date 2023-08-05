@@ -46,10 +46,14 @@
     </div>
     <div class="employees__menu mb-11 flex justify-between items-start">
       <ul class="employees__tab">
-        <li class="active" @click="getPhysicalStuffAll">Barchasi <span>{{tableData.length}}</span></li>
-        <li 
-        v-for="(category, i) in categories" :key="i"
-        @click="getPhysicalStuffCategory(category.category.id)">
+        <li class="active" @click="getPhysicalStuffAll">
+          Barchasi <span>{{ tableData.length }}</span>
+        </li>
+        <li
+          v-for="(category, i) in categories"
+          :key="i"
+          @click="getPhysicalStuffCategory(category.category.id)"
+        >
           {{ category.category.name }} <span>{{ category.countFaces }}</span>
         </li>
       </ul>
@@ -69,7 +73,7 @@
                   :key="i"
                   :value="naturalPerson.id"
                 >
-                  {{ naturalPerson.firstName }} 
+                  {{ naturalPerson.firstName }}
                   {{ naturalPerson.lastName }}
                   {{ naturalPerson.middleName }}
                 </option>
@@ -78,19 +82,19 @@
             <div>
               <label for="">Lavozimlar</label>
               <select v-model="form.cid">
-                <option 
-                v-for="(position, i) in positionUser" :key="i"  
-                :value="position.id" >{{position.name}}</option>
+                <option v-for="(position, i) in positionUser" :key="i" :value="position.id">
+                  {{ position.name }}
+                </option>
               </select>
             </div>
             <div>
               <label for="">Sanadan boshlab</label>
-              {{form.start_date}}
+              {{ form.start_date }}
               <input type="date" v-model="form.start_date" />
             </div>
             <div>
               <label for="">Sanagacha</label>
-              <input type="date" v-model="form.end_date"/>
+              <input type="date" v-model="form.end_date" />
             </div>
             <div class="flex justify-end gap-3">
               <div class="button" @click="modal = false">Bekor qilish</div>
@@ -113,18 +117,18 @@ import { ref } from 'vue'
 import api from '../services/baseHttp.js'
 
 const categories = ref('')
-const modal = ref(false);
-const naturalPersons = ref([]);
-const positionUser = ref([]);
-const tableData = ref([]);
+const modal = ref(false)
+const naturalPersons = ref([])
+const positionUser = ref([])
+const tableData = ref([])
 
 const FORM = {
   fid: '',
   cid: '',
   end_date: '',
-  start_date: '',
+  start_date: ''
 }
-const form = ref({...FORM});
+const form = ref({ ...FORM })
 
 async function getCategories() {
   api.get('physical-stuff/categories').then((response) => {
@@ -156,11 +160,14 @@ async function postPhysicalStuff() {
   formData.append('start_date', form.value.start_date)
   formData.append('end_date', form.value.end_date)
 
-  api.post('physical-stuff/create', formData).then(res =>{
-    console.log(res);
-  }).catch((error)=>{
-    console.log(error.response.data.message);
-  })
+  api
+    .post('physical-stuff/create', formData)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((error) => {
+      console.log(error.response.data.message)
+    })
 }
 
 async function getPhysicalStuffAll() {
@@ -171,15 +178,9 @@ async function getPhysicalStuffAll() {
 getPhysicalStuffAll()
 
 async function getPhysicalStuffCategory(id) {
-  console.log(id);
-  const formData = new FormData()
-  formData.append('cid', id)
-  api
-    .get('physical-stuff/by-category', formData)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => console.log(error))
+  api.get(`physical-stuff/by-category?cid=${id}`).then((response) => {
+    tableData.value = response.data
+  })
 }
 </script>
 

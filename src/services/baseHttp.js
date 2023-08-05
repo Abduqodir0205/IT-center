@@ -16,6 +16,7 @@ api.interceptors.request.use((config) => {
     if(token) config.headers.Authorization = `Bearer ${token}`
     config.headers["ngrok-skip-browser-warning"] = true
     config.headers['Access-Control-Allow-Origin'] = '*'
+    config.headers['Content-Type'] = "application/json"
     return config
 }, error => {
     return Promise.reject(error)

@@ -24,7 +24,6 @@
           <tr v-for="(item, i) in tableData" :key="i">
             <td>
               <input type="checkbox" />
-              {{item.id}}
             </td>
             <td>{{item.physicalFace.firstName}} {{item.physicalFace.lastName}}</td>
             <td>{{item.physicalFace.address}}</td>
@@ -35,7 +34,7 @@
               <img :src="item.physicalFace.photo" :alt="item.physicalFace.id" />
             </td>
             <td>
-              <button>
+              <button @click="">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"
