@@ -33,10 +33,7 @@ body {
 }
 
 .title {
-    color: #1E293B;
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 40px;
+    @include font(32, 40, 700, #1E293B);
 }
 
 .btn {
@@ -47,10 +44,7 @@ body {
     gap: 4px;
     border-radius: 9px;
     background: #7364FF;
-    color: var(--white, #FFF);
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
+    @include font(16, 20, 500, #fff);
 }
 
 .btn-green {
@@ -69,15 +63,12 @@ select {
     transition: all .3s ease;
 }
 
-.modalEvent-enter-active
- {
-    transition: all .3s ease;
-    
-}
-.modalEvent-leave-active{
-    transition: all .5s ease;
+.modalEvent-enter-active,
+.modalEvent-leave-active {
+    transition: all .4s ease;
 
 }
+
 .modalEvent-enter-from,
 .modalEvent-leave-to {
     transform: translate(-50%, -50%) scale(0) !important;

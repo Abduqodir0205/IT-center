@@ -1,98 +1,93 @@
 <template>
   <div class="science">
-      <div class="science__content">
-        <div class="science-direction">
-          <h1>Yo’nalishlar</h1>
-          <button @click="add"><span>+</span>New Task</button>
-        </div>
-        <div class="science__departments">
-          <ul class="ulllll snap-mandatory snap-x">
-            <li @click="getAllByOrg()" 
-            :class="{ active: all }">
-            Barchasi
-            </li>
-            <li
-              class="break-normal snap-center"
-              v-for="(ignition, i) in ssOrgSubjects"
-              :key="i"
-              @click="filterByOrders(ignition.id, i)"
-              :class="{ active: i === activeClass }"
-            >
-              {{ ignition.name }}
-            </li>
-          </ul>
-        </div>
-        <div class="science__cards">
-          <div class="science__card" v-for="(orders, i) in allByOrg" :key="i" v-show="displayOrder">
-            <div class="science-card__top">
-              <h1>{{ orders.subSubject.name }}</h1>
-              <img src="../assets/images/svg/ShapeMore.svg" alt="" />
-            </div>
-            <p>
-              {{ orders.description }}
-            </p>
-            <img :src="orders.imageStore" alt="" />
+    <div class="science__content">
+      <div class="science-direction">
+        <h1>Yo’nalishlar</h1>
+        <button @click="add"><span>+</span>New Task</button>
+      </div>
+      <div class="science__departments">
+        <ul class="ulllll snap-mandatory snap-x">
+          <li @click="getAllByOrg()" :class="{ active: all }">Barchasi</li>
+          <li
+            class="break-normal snap-center"
+            v-for="(ignition, i) in ssOrgSubjects"
+            :key="i"
+            @click="filterByOrders(ignition.id, i)"
+            :class="{ active: i === activeClass }"
+          >
+            {{ ignition.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="science__cards">
+        <div class="science__card" v-for="(orders, i) in allByOrg" :key="i" v-show="displayOrder">
+          <div class="science-card__top">
+            <h1>{{ orders.subSubject.name }}</h1>
+            <img src="../assets/images/svg/ShapeMore.svg" alt="" />
           </div>
+          <p>
+            {{ orders.description }}
+          </p>
+          <img :src="orders.imageStore" alt="" />
         </div>
       </div>
-    <div class="overlay" v-show="modal"></div>
-
-    <div class="modal__content" :class="{ modal__show: modal }">
-      <form @submit.prevent="submit">
-        <div class="save__btn">
-          <button id="save">Saqlash</button>
-          <div id="saveX" @click="modal = !modal">Bekor qilish</div>
-        </div>
-        <div class="selects">
-          <div>
-            <label class="label" for="">Fan</label>
-            <select id="modal__inputs" @change="getFanData" v-model="form.sid">
-              <option v-for="(element, i) in fan" :key="i" :value="element.id">
-                {{ element.name }}
-              </option>
-            </select>
-          </div>
-          <div>
-            <label class="label" for="">Yo'nalish</label>
-            <select id="modal__inputs" @change="getSubData" v-model="form.ssid">
-              <option v-for="(item, i) in yonalish" :key="i" :value="item.id">
-                {{ item.name }}
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="datas">
-          <div>
-            <label class="label" for="">Ochilgan sana</label>
-            <input disabled="false" id="modal__inputs" type="text" v-model="date" />
-          </div>
-          <div>
-            <label class="label" for="">Yopilish sana</label>
-            <input id="modal__inputs" type="date" placeholder="12.12.2023" />
-          </div>
-        </div>
-        <div>
-          <label class="label" for="">Qisqacha ma’lumot</label>
-          <div class="texterya">
-            <textarea cols="30" rows="5" v-model="form.description"></textarea>
-          </div>
-        </div>
-        <div class="upload">
-          <input 
-          type="file" 
-          :multiple="false" 
-          @change="changeFile" />
-          <div class="image" v-if="selectedImage?.url">
-            <img :src="selectedImage.url" alt="Salom" />
-          </div>
-        </div>
-      </form>
     </div>
+    <div class="overlay" v-show="modal" @click="modal = false"></div>
+    <Transition name="modalEvent">
+      <div class="modal__content modal" v-show="modal">
+        <form @submit.prevent="submit">
+          <div class="save__btn">
+            <button id="save">Saqlash</button>
+            <div id="saveX" @click="modal = !modal">Bekor qilish</div>
+          </div>
+          <div class="selects">
+            <div>
+              <label class="label" for="">Fan</label>
+              <select id="modal__inputs" @change="getFanData" v-model="form.sid">
+                <option v-for="(element, i) in fan" :key="i" :value="element.id">
+                  {{ element.name }}
+                </option>
+              </select>
+            </div>
+            <div>
+              <label class="label" for="">Yo'nalish</label>
+              <select id="modal__inputs" @change="getSubData" v-model="form.ssid">
+                <option v-for="(item, i) in yonalish" :key="i" :value="item.id">
+                  {{ item.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="datas">
+            <div>
+              <label class="label" for="">Ochilgan sana</label>
+              <input disabled="false" id="modal__inputs" type="text" v-model="date" />
+            </div>
+            <div>
+              <label class="label" for="">Yopilish sana</label>
+              <input id="modal__inputs" type="date" placeholder="12.12.2023" />
+            </div>
+          </div>
+          <div>
+            <label class="label" for="">Qisqacha ma’lumot</label>
+            <div class="texterya">
+              <textarea cols="30" rows="5" v-model="form.description"></textarea>
+            </div>
+          </div>
+          <div class="upload">
+            <input type="file" :multiple="false" @change="changeFile" />
+            <div class="image" v-if="selectedImage?.url">
+              <img :src="selectedImage.url" alt="Salom" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </Transition>
   </div>
 </template>
 <script>
-import Options from '../components/options.vue';
-import api from '../services/baseHttp.js';
+import Options from '../components/options.vue'
+import api from '../services/baseHttp.js'
 
 const FORM = {
   description: '',
@@ -103,7 +98,7 @@ const FORM = {
 export default {
   data() {
     return {
-      form: {...FORM},
+      form: { ...FORM },
       scienceName: '',
       directionName: '',
       message: '',
@@ -118,7 +113,7 @@ export default {
       ssOrgSubjects: '',
       allByOrg: [],
       displayOrder: true,
-      selectedImage:  {},
+      selectedImage: {},
       changeFileEl: false,
       modal: false,
       activeClass: null,
@@ -127,9 +122,9 @@ export default {
   },
   watch: {
     modal(val) {
-      console.log(val, 'modal');
-      if(!val) {  
-        this.form = {...FORM}
+      console.log(val, 'modal')
+      if (!val) {
+        this.form = { ...FORM }
         this.selectedImage = {}
       }
     }
@@ -174,16 +169,14 @@ export default {
     // },
     changeFile(e) {
       const files = e.target.files
-      console.log(files);
+      console.log(files)
       if (files.length === 0) return
-      console.log(URL);
+      console.log(URL)
       this.selectedImage = { name: files[0].name, url: URL.createObjectURL(files[0]) }
-      console.log(this.selectedImage);
+      console.log(this.selectedImage)
       this.file = e.target.files[0]
     },
     submit(e) {
-      
-
       let form = new FormData()
       form.append('sid', this.form.sid)
       form.append('ssid', this.form.ssid)
@@ -202,7 +195,7 @@ export default {
       //   })
       api
         .post('org/ss/create', form)
-        .then(res => {
+        .then((res) => {
           this.getAllByOrg()
           this.getSs()
           this.modal = false
@@ -214,7 +207,7 @@ export default {
     async getSs() {
       api.get('org/ss/org-subjects').then((response) => {
         this.ssOrgSubjects = response.data
-        console.log(response);
+        console.log(response)
       })
     },
     async getAllByOrg() {
@@ -225,8 +218,8 @@ export default {
       })
     },
     async filterByOrders(id, index) {
-        this.activeClass = index
-        this.all = false
+      this.activeClass = index
+      this.all = false
       api.get(`org/ss/ss-by-org?sid=${id}`).then((response) => {
         this.allByOrg = response.data
       })
@@ -240,7 +233,7 @@ export default {
   },
   components: {
     Options
-  },
+  }
 }
 </script>
 <style></style>
