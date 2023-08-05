@@ -1,63 +1,14 @@
-.nnn{
-    background: #FFF;
-    padding: 26px 38px 26px 30px;
-    height: 100px;
-    .nav__content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+$white-color: #FFFFFF;
+$secondary-color: #F3F8FB;
+$disabled-color: #DBDBDB;
+$fonts-primary__icon: #8B83BA;
+$gray-01: #4D515A;
+$gray-02: #40444D;
+$blue-color: #7364FF;
+$main-color: #5D5FEF;
+$success-color: #10B981;
 
-        .nav__left {
-            form {
-                .nav__left-form {
-                    display: flex;
-                    align-items: center;
-                    gap: 5.94px;
-                    border-radius: 8px;
-                    background: #F5F5FA;
-                    padding-left: 10px;
-                    input {
-                        width: 372px;
-                        outline: none;
-                        background-color: #F5F5FA;
-                        border: none;
-                        padding: 12px 254.003px 11.94px 0;
-                    border-radius: 8px;
+$text-color1: #3B424A;
+$text-color2: #7B8190;
+$warning-color: #FF0000;
 
-                    }
-                }
-            }
-        }
-
-        .nav__right {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            .nav__right-item{
-                width: 44px;
-                height: 44px;
-                display: inline-flex;
-                padding: 10px;
-                align-items: flex-start;
-                gap: 10px;
-                border-radius: 50px;
-                background: #F1F5F9;
-            }
-            .nav__right-border{
-                width: 1px;
-                height: 52px;
-                border-radius: 1px;
-                background: #E2E8F0;
-            }
-            .nav__right-user {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-
-            }
-            .nav__right-user:hover, .nav__right-item:hover{
-                cursor: pointer;
-            }
-        }
-    }
-}

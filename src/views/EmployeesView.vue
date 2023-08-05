@@ -46,13 +46,15 @@
     </div>
     <div class="employees__menu mb-11 flex justify-between items-start">
       <ul class="employees__tab">
-        <li class="active" @click="getPhysicalStuffAll">
+        <li :class="{active: all}" @click="getPhysicalStuffAll()">
           Barchasi <span>{{ tableData.length }}</span>
         </li>
         <li
+        class="break-normal snap-center"
           v-for="(category, i) in categories"
           :key="i"
-          @click="getPhysicalStuffCategory(category.category.id)"
+          @click="getPhysicalStuffCategory(category.category.id, i)"
+          :class="{active: i === activeClass}"
         >
           {{ category.category.name }} <span>{{ category.countFaces }}</span>
         </li>
@@ -121,6 +123,8 @@ const modal = ref(false)
 const naturalPersons = ref([])
 const positionUser = ref([])
 const tableData = ref([])
+const activeClass = ref(null);
+const all = ref(true);
 
 const FORM = {
   fid: '',
@@ -173,13 +177,17 @@ async function postPhysicalStuff() {
 async function getPhysicalStuffAll() {
   api.get('physical-stuff/all').then((response) => {
     tableData.value = response.data
+    all.value = true;
+    activeClass.value = null;
   })
 }
 getPhysicalStuffAll()
 
-async function getPhysicalStuffCategory(id) {
+async function getPhysicalStuffCategory(id, index) {
   api.get(`physical-stuff/by-category?cid=${id}`).then((response) => {
     tableData.value = response.data
+    activeClass.value = index
+    all.value = false
   })
 }
 </script>
