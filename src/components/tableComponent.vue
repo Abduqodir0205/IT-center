@@ -34,7 +34,7 @@
               <img :src="item.physicalFace.photo" :alt="item.physicalFace.id" />
             </td>
             <td>
-              <button>
+              <button @click="$router.push(`/teachersform/${item.id}`)">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="28"

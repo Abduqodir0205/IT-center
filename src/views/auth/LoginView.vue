@@ -4,13 +4,18 @@
       <div class="login__content">
         <div class="login__left-item">
           <h2>Welcome Back!</h2>
-          <form class="login__form" @submit.prevent="user">
+          <div class="login__form" @submit="user">
             <span>Username:</span>
-            <input type="text" id="username" name="username" v-model="form.username" />
+            <Form ref="formRef">
+            <Field v-slot="{errors}" :model-value="form.username" name="username" rules="required">
+             <input :class="{'error': errors[0]}" type="text" id="username" name="username" v-model="form.username" />
+             <span v-if="errors[0]" class="text-red-500">{{ errors[0] }}</span>
+            </Field>
+            </Form>
             <span>Password:</span>
             <input type="password" id="password" name="password" v-model="form.password" />
-            <button>Login</button>
-          </form>
+            <button @click="user">Login</button>
+          </div>
           <p>Dont have and account?<span>Register</span></p>
           <div class="icons"></div>
         </div>
@@ -26,16 +31,22 @@
 import api from '@/services/baseHttp.js'
 import { ref } from 'vue'
 import router from '@/router'
+import { Field, Form } from 'vee-validate'
 
-const formData = new FormData()
 
 const FORM = {
   username: '',
   password: ''
 }
 const form = ref({ ...FORM })
+const formRef = ref()
 
-function user() {
+async function user() {
+  console.log(formRef.value);
+  const validate = await formRef.value.validate()
+  console.log(validate);
+  if(validate.valid) {
+ const formData = new FormData()
   formData.append('username', form.value.username)
   formData.append('password', form.value.password)
   api
@@ -48,5 +59,7 @@ function user() {
       }
     })
     .catch((error) => console.log(error))
+  }
+ 
 }
 </script>

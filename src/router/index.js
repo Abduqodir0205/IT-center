@@ -24,7 +24,7 @@ const router = createRouter({
           component: () => import('../views/EmployeesView.vue')
         },
         {
-          path: '/teachersform',
+          path: '/teachersform/:id?',
           name: 'teachersform',
           component: () => import('../views/TeachersForm.vue')
         },
@@ -38,8 +38,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token')
-  if(!token && to.name == 'cart') {
-    next({name: 'home'})
+  if(!token && to.name !== 'login') {
+    next({name: 'login'})
   } else {
     if(token) {
       next()

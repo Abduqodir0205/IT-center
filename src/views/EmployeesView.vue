@@ -46,15 +46,15 @@
     </div>
     <div class="employees__menu mb-11 flex justify-between items-start">
       <ul class="employees__tab">
-        <li :class="{active: all}" @click="getPhysicalStuffAll()">
+        <li :class="{ active: all }" @click="getPhysicalStuffAll()">
           Barchasi <span>{{ tableData.length }}</span>
         </li>
         <li
-        class="break-normal snap-center"
+          class="break-normal snap-center"
           v-for="(category, i) in categories"
           :key="i"
           @click="getPhysicalStuffCategory(category.category.id, i)"
-          :class="{active: i === activeClass}"
+          :class="{ active: i === activeClass }"
         >
           {{ category.category.name }} <span>{{ category.countFaces }}</span>
         </li>
@@ -109,6 +109,10 @@
     <div class="employees__table">
       <TableComponent :tableData="tableData"></TableComponent>
     </div>
+    <h1 class="loading" v-show="LOADING">
+      <!-- <div>{{myJson}}</div> -->
+      <div>LOADING...</div>
+    </h1>
   </div>
 </template>
 
@@ -117,15 +121,19 @@ import BaseButton from '../components/baseButton.vue'
 import TableComponent from '../components/tableComponent.vue'
 import { ref } from 'vue'
 import api from '../services/baseHttp.js'
-
+import json from '../loading.json'
+import { fetchPhysicalStuffAll } from '@/services/pages/employees.js'
+ 
 const categories = ref('')
 const modal = ref(false)
 const naturalPersons = ref([])
 const positionUser = ref([])
 const tableData = ref([])
-const activeClass = ref(null);
-const all = ref(true);
-
+const activeClass = ref(null)
+const all = ref(true)
+const LOADING = ref(false)
+const myJson =  ref(json)
+                 
 const FORM = {
   fid: '',
   cid: '',
@@ -142,9 +150,11 @@ async function getCategories() {
 getCategories()
 
 async function getPhysicalFace() {
+  LOADING.value = true
   api.get('physical-face/all').then((response) => {
     naturalPersons.value = response.data
     form.value.fid = response.data[0].id
+    LOADING.value = false
   })
 }
 getPhysicalFace()
@@ -175,11 +185,16 @@ async function postPhysicalStuff() {
 }
 
 async function getPhysicalStuffAll() {
-  api.get('physical-stuff/all').then((response) => {
+  fetchPhysicalStuffAll().then((response) => {
     tableData.value = response.data
-    all.value = true;
-    activeClass.value = null;
+    all.value = true
+    activeClass.value = null
   })
+  // api.get('physical-stuff/all').then((response) => {
+  //   tableData.value = response.data
+  //   all.value = true
+  //   activeClass.value = null
+  // })
 }
 getPhysicalStuffAll()
 

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import router from '@/router'
 
-const baseURL = 'https://1eb2-213-230-78-214.ngrok-free.app/api/'
+const baseURL = 'https://b7ec-213-230-78-235.ngrok-free.app/api/'
 
 const api = axios.create({
     baseURL,

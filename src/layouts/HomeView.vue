@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import Navbar from '../components/navbar.vue'
-import SiteBar from '../components/sitebar.vue'
+import Navbar from '../components/Navbar.vue'
+import SiteBar from '../components/Sitebar.vue'
 export default {
   data() {
     return {}

@@ -130,6 +130,13 @@ import Multiselect from '@vueform/multiselect'
 import DropdownComponent from '../components/DropdownComponent.vue'
 import api from '../services/baseHttp.js'
 import { ref } from 'vue'
+import { fetchPhysicalStuffAll } from '@/services/pages/employees.js'
+import { useRoute } from 'vue-router'
+import {useToast} from 'vue-toast-notification';
+
+const $toast = useToast();
+
+const { params } = useRoute()
 
 const options = ref([])
 const selectedImageEl = ref({})
@@ -150,7 +157,7 @@ const FORM_EMPLOYEE = {
   telegram: '',
   instagram: '',
   photo: '',
-  interests: null
+  interests: []
 }
 
 const form = ref({ ...FORM_EMPLOYEE })
@@ -183,8 +190,37 @@ async function getInterest() {
 }
 getInterest()
 
+async function getPhysicalStuffAll() {
+  if(params.id) {
+fetchPhysicalStuffAll().then((response) => {
+    const data = response.data.find(p => p.id === +params.id)
+    form.value.firstName = data.physicalFace.firstName
+    form.value.lastName = data.physicalFace.lastName
+    form.value.middleName = data.physicalFace.middleName
+    form.value.birthday = data.physicalFace.birthday
+    form.value.identification = data.physicalFace.personalIdentification
+    form.value.address = data.physicalFace.address
+    form.value.eLevel = data.physicalFace?.educationLevel?.id || ''
+    form.value.phone1 = data.physicalFace.primaryPhone
+    form.value.phone2 = data.physicalFace.secondaryPhone
+    form.value.instagram = data.physicalFace.instagramUsername
+    form.value.telegram = data.physicalFace.telegramUsername
+    selectedImageEl.value.url = data.physicalFace.photo
+    if(data.physicalFace?.interests) {
+data.physicalFace.interests.forEach(element => {
+      form.value.interests.push(element.id)
+    });
+    }
+  })
+  }
+}
+getPhysicalStuffAll()
+
+
+
 async function submit() {
-  let formData = new FormData()
+  try {
+let formData = new FormData()
   formData.append('firstname', form.value.firstName)
   formData.append('lastname', form.value.lastName)
   formData.append('middleName', form.value.middleName)
@@ -199,11 +235,23 @@ async function submit() {
   formData.append('interests', form.value.interests)
   formData.append('photo', file.value)
 
-  api.post('physical-face/create', formData).then(res =>{
-    console.log(res);
-  }).catch((error)=>{
-    console.log(error.response.data.message);
+  const { id } = params
+
+  if(id) {
+    await api.put(`physical-face/create/${id}`, formData)
+  } else {
+    await api.post('physical-face/create', formData)
+  }
+  $toast.success('Muvaffaqiyatli saqlandi', {
+    position: 'top-right'
   })
+  } catch(err) {
+    console.log(err);
+  $toast.error(err.response?.data?.error || err?.message || 'xato', {
+      position: 'top-right'
+    })
+  }
+  
 }
 </script>
 
